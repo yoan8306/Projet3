@@ -8,9 +8,13 @@
 import Foundation
 
 protocol Weapons {
+    
+    // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
     var damages: Int { get }
 }
 
+
+// j'utilise des structures car il n'y a pas de logique à gérer.
 struct Knife: Weapons {
     var damages = Int.random(in: 1...5)
 }

@@ -21,11 +21,33 @@ class Game {
         playerTwo = Player(name: "Player 2")
     }
     
-    func startNewGame() {
+    
+    func launchGame() {
+        // on boucle à l'infinie pour recommencer une nouvelle partie
+        while choice == "" {
+            print("Tap 1 for start new game")
+            choice = readLine() ?? ""
+            switch choice {
+            case "1":
+                
+                // on sélectionne 1 pour commencer une nouvelle partie et on remet gameContinue sur true pour une nouvelle partie
+                gameContinue = true
+                print("Start new game")
+                startNewGame()
+            default:
+                print("I don't understand your choice")
+                choice = ""
+            }
+            // permet de boucler à l'infinie
+           choice = ""
+        }
+    }
+    
+    private func startNewGame() {
         // on créée les équipes des joueurs 1 et 2
         gameCreateTeam(player: playerOne)
         gameCreateTeam(player: playerTwo)
-        
+    
         //combat tour par tour jusqu'a la sortie de la fonction
         roundByRound()
         
@@ -43,7 +65,6 @@ class Game {
         print("Game Over")
     }
 }
-
 
 
 // check character name already exist
@@ -74,6 +95,9 @@ extension Game {
         }
         print("Successful! \n your team is create")
         print("-------\(player.name) your team is: -----------")
+        
+        // on liste l'équipe créée
+        player.listTeam()
     }
     
     func characterNameExist(newName: String) ->Bool {
@@ -91,9 +115,6 @@ extension Game {
         }
     }
 }
-
-
-
 
 
 // fight round by round

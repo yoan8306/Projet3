@@ -6,8 +6,11 @@
 //
 
 import Foundation
-
-var gameContinue = true
+var gameContinue: Bool
 var newGame: Game = Game()
+var choice = ""
 
-newGame.startNewGame()
+newGame.launchGame()
+
+
+
