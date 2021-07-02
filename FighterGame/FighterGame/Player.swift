@@ -7,44 +7,21 @@
 
 import Foundation
 
-// create Team
 class Player {
     var name: String
     var team: [Character] = []
     var playing = false
     
-    
+    // on initialise le nom du joueur automatiquemet
     init(name: String) {
         self.name = name
     }
     
     
-//    func createTeam() {
-//        print("-----\(name) begin----")
-//        // on boucle tant que nous n'avons pas nos 3 personnages
-//        for index in 1...3 {
-//            print("Enter name of personage \(index)")
-//            // on renseigne le nom du joueur
-//            var newName = readLine()
-//            // on boucle tant que characterName n'est pas different de faux
-//            while newGame.characterNameExist(newName: newName ?? "") == false {
-//                newName = readLine()
-//            }
-//
-//            let newPerson: Character = Character(newName: newName ?? "")
-//            newPerson.name = newName ?? ""
-//            print("\(newPerson.name) has added in your team ")
-//            team.append(newPerson)
-//        }
-//        print("Successful! \n your team is create")
-//        print("-------\(name) your team is: -----------")
-//        listTeam()
-//    }
-    
-    
-    // on vérifie que le nom ne soit pas déjà entré et on renvoie
+    // on vérifie que le nom du personnage ne soit pas déjà entré et on renvoie un booléen
     func checkNameAlreadyExist(newName name: String) -> Bool {
-        // On parcours le tableau des deux équipes
+        
+        // On parcours le tableau de l'équipe
         for nameAlreadyExist in team {
             if nameAlreadyExist.name == name {
                 return true // ici le nombre de récurrence
@@ -54,9 +31,9 @@ class Player {
     }
 }
 
-// liste Team
+
 extension Player {
-    
+    // on liste l'équipe avec leur caractéristique
     func listTeam() {
         var index = 1
         for character in team {
@@ -71,10 +48,12 @@ extension Player {
 }
 
 
-// Attack round by round
+
 extension Player {
-    
+    // ici l'attaque on idientifie le joueur en défense et on met le bonus si présent en paramètre.
     func attack(playerDefense: Player, weaponBonus: Weapons?) {
+        
+        // l'action de l'attaque renvoie un booléen pour renseigner la variable gameContinue si la partie continue ou non
         gameContinue = makeAttack(playerDefense: playerDefense, weaponBonus: weaponBonus)
     }
     
@@ -82,18 +61,28 @@ extension Player {
     private func makeAttack(playerDefense: Player, weaponBonus: Weapons?) -> Bool {
         var heroAttack : Character = team[0]
         var heroDefense : Character
+        
+        // par défaut usePresent et false car si il n'y a pas de bonus on n'exécutera pas le code associé. '
         var usePresent = false
         
+        // on vérifie notre paramètre si il y a un bonus
         if weaponBonus != nil {
+            
+            //on informe l'utilisateur de la présence du bonus
             print("Congratulation! \nTap 1- for use \(weaponBonus!) \nTap 2- you select your hero")
             var choice = ""
             while choice == "" {
                 choice = readLine() ?? ""
                 switch choice {
                 case "1":
+                    
+                    // on passe la variable usePresent à true si on utilise le bonus
                     print("you choose a present")
                     usePresent = true
                 case "2":
+                    
+                    // on passe la variable usePresent à false si on utilise pas le bonus
+                    
                     print("You choose your hero")
                     usePresent = false
                 default:
@@ -103,10 +92,16 @@ extension Player {
             }
         }
         
+        // on met l'index à 1 pour obtenir le bon numéro pour le choix de l'utilisateur
         var index = 1
+        
+        //on vérifie si on doit utiliser le bonus ou si on doit sélectionner un attaquant.
         if usePresent == false {
+            
             print("--------- Select your Hero for attack.--------------")
             for heroAttack in team {
+                
+                //on ne liste que les personnages en vie
                 if heroAttack.lifePoint > 0 {
                     print("- \(index) - \(heroAttack.name)"
                             + "\n❤️: \(heroAttack.lifePoint)"
@@ -118,12 +113,18 @@ extension Player {
                     index += 1
                 }
             }
+            // on récupère le choix de l'utilisateur
             heroAttack = choiceAttack()
         }
         
+        // on remet la valeur à 1
         index = 1
+        
+        // on sélectionne le personnage qui doit recevoir l'attaque
         print("-------------- Select hero receiving attack. -----------------")
         for heroDefense in playerDefense.team {
+            
+            // on ne liste que les personnages en vie
             if heroDefense.lifePoint > 0 {
                 print("- \(index) - \(heroDefense.name)"
                         + "\n❤️: \(heroDefense.lifePoint)"
@@ -137,21 +138,30 @@ extension Player {
         
         index = 0
         
+        // on récupère le choix de l'utilisateur
         heroDefense = choiceDefense(playerDefense: playerDefense)
         
+        // on vérifie si nous devons utiliser le bonus pour infliger les dégats sur la personne attaqué
         if usePresent == false {
             heroDefense.lifePoint -=  heroAttack.weapon.damages
         } else {
             heroDefense.lifePoint -= weaponBonus!.damages
         }
+        
+        // on informe du succès de l'attaque
         print("\(heroDefense.name): ❤️\(heroDefense.lifePoint) - ")
         
+        // on vérifie si le jeux continue en comptant le nombre de personnage ayant des points de vie
         for character in playerDefense.team {
             if character.lifePoint > 0 {
             } else {
+                
+                // on ajoute 1 a chaque personnage mort
                 index += 1
             }
         }
+        
+        // si on a compté 3 ou plus tout les personnages sont morts et la partie s'arrête grace à la variable gameContinue false
         if index >= 3 {
             gameContinue = false
             print("\(name) win")
@@ -161,6 +171,7 @@ extension Player {
         return gameContinue
     }
     
+    
     private func choiceAttack()-> Character {
         var choice = ""
         var heroAttack = team[0]
@@ -168,6 +179,8 @@ extension Player {
             choice = readLine() ?? ""
             switch choice {
             case "1":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if team[0].lifePoint > 0 {
                     heroAttack = team[0]
                 } else {
@@ -175,6 +188,8 @@ extension Player {
                     choice = ""
                 }
             case "2":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if team[1].lifePoint > 0 {
                     heroAttack = team[1]
                 } else {
@@ -182,6 +197,8 @@ extension Player {
                     choice = ""
                 }
             case "3":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if team[2].lifePoint > 0 {
                     heroAttack = team[2]
                 } else {
@@ -203,6 +220,8 @@ extension Player {
             choice = readLine() ?? ""
             switch choice {
             case "1":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if playerDefense.team[0].lifePoint > 0 {
                     heroDefense = playerDefense.team[0]
                 } else {
@@ -210,6 +229,8 @@ extension Player {
                     choice = ""
                 }
             case "2":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if playerDefense.team[1].lifePoint > 0 {
                     heroDefense = playerDefense.team[1]
                 } else {
@@ -217,6 +238,8 @@ extension Player {
                     choice = ""
                 }
             case "3":
+                
+                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
                 if playerDefense.team[2].lifePoint > 0 {
                     heroDefense = playerDefense.team[2]
                 } else {
