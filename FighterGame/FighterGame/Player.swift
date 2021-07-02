@@ -52,6 +52,7 @@ extension Player {
 
 
 extension Player {
+    
     // ici l'attaque on identifie le joueur en défense et on met le bonus si présent en paramètre.
     func attack(playerDefense: Player, weaponBonus: Weapons?) {
         
@@ -163,11 +164,14 @@ extension Player {
         
         // si on a compté 3 ou plus alors tout les personnages sont morts et la partie s'arrête grace à la variable gameContinue false
         if index >= 3 {
+            
+            // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
             gameContinue = false
             print("\(name) win")
         } else {
             gameContinue = true
         }
+        //on retourne le booléen
         return gameContinue
     }
     
