@@ -12,7 +12,7 @@ class Player {
     var team: [Character] = []
     var playing = false
     
-    // on initialise le nom du joueur automatiquemet
+    // on initialise le nom du joueur automatiquement
     init(name: String) {
         self.name = name
     }
@@ -24,16 +24,18 @@ class Player {
         // On parcours le tableau de l'équipe
         for nameAlreadyExist in team {
             if nameAlreadyExist.name == name {
-                return true // ici le nombre de récurrence
+                // si correspondance trouvé on renvoie true et on sort de la fonction
+                return true
             }
         }
+        // sinon on renvoie false
         return false
     }
 }
 
 
 extension Player {
-    // on liste l'équipe avec leur caractéristique
+    // on liste les personnages de l'équipe avec les caractéristiques de chacun
     func listTeam() {
         var index = 1
         for character in team {
@@ -50,7 +52,7 @@ extension Player {
 
 
 extension Player {
-    // ici l'attaque on idientifie le joueur en défense et on met le bonus si présent en paramètre.
+    // ici l'attaque on identifie le joueur en défense et on met le bonus si présent en paramètre.
     func attack(playerDefense: Player, weaponBonus: Weapons?) {
         
         // l'action de l'attaque renvoie un booléen pour renseigner la variable gameContinue si la partie continue ou non
@@ -62,10 +64,10 @@ extension Player {
         var heroAttack : Character = team[0]
         var heroDefense : Character
         
-        // par défaut usePresent et false car si il n'y a pas de bonus on n'exécutera pas le code associé. '
+        // par défaut usePresent et false car si il n'y a pas de bonus on n'exécutera pas le code associé.
         var usePresent = false
         
-        // on vérifie notre paramètre si il y a un bonus
+        // on vérifie notre paramètre s'il y a un bonus
         if weaponBonus != nil {
             
             //on informe l'utilisateur de la présence du bonus
@@ -82,7 +84,6 @@ extension Player {
                 case "2":
                     
                     // on passe la variable usePresent à false si on utilise pas le bonus
-                    
                     print("You choose your hero")
                     usePresent = false
                 default:
@@ -120,11 +121,10 @@ extension Player {
         // on remet la valeur à 1
         index = 1
         
-        // on sélectionne le personnage qui doit recevoir l'attaque
         print("-------------- Select hero receiving attack. -----------------")
         for heroDefense in playerDefense.team {
             
-            // on ne liste que les personnages en vie
+            // on ne liste que les personnages en vie dans l'équipe adverse
             if heroDefense.lifePoint > 0 {
                 print("- \(index) - \(heroDefense.name)"
                         + "\n❤️: \(heroDefense.lifePoint)"
@@ -141,7 +141,7 @@ extension Player {
         // on récupère le choix de l'utilisateur
         heroDefense = choiceDefense(playerDefense: playerDefense)
         
-        // on vérifie si nous devons utiliser le bonus pour infliger les dégats sur la personne attaqué
+        // on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
         if usePresent == false {
             heroDefense.lifePoint -=  heroAttack.weapon.damages
         } else {
@@ -161,7 +161,7 @@ extension Player {
             }
         }
         
-        // si on a compté 3 ou plus tout les personnages sont morts et la partie s'arrête grace à la variable gameContinue false
+        // si on a compté 3 ou plus alors tout les personnages sont morts et la partie s'arrête grace à la variable gameContinue false
         if index >= 3 {
             gameContinue = false
             print("\(name) win")
@@ -180,7 +180,7 @@ extension Player {
             switch choice {
             case "1":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if team[0].lifePoint > 0 {
                     heroAttack = team[0]
                 } else {
@@ -189,7 +189,7 @@ extension Player {
                 }
             case "2":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if team[1].lifePoint > 0 {
                     heroAttack = team[1]
                 } else {
@@ -198,7 +198,7 @@ extension Player {
                 }
             case "3":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if team[2].lifePoint > 0 {
                     heroAttack = team[2]
                 } else {
@@ -221,7 +221,7 @@ extension Player {
             switch choice {
             case "1":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if playerDefense.team[0].lifePoint > 0 {
                     heroDefense = playerDefense.team[0]
                 } else {
@@ -230,7 +230,7 @@ extension Player {
                 }
             case "2":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if playerDefense.team[1].lifePoint > 0 {
                     heroDefense = playerDefense.team[1]
                 } else {
@@ -239,7 +239,7 @@ extension Player {
                 }
             case "3":
                 
-                // on vérifie que le choix sélectionner correspond à un joueur encore en vie
+                // on vérifie que le choix sélectionné correspond à un joueur encore en vie
                 if playerDefense.team[2].lifePoint > 0 {
                     heroDefense = playerDefense.team[2]
                 } else {
@@ -262,8 +262,10 @@ extension Player {
         var doctor : Int
         var index = 1
         var heroWounded = team[0]
+        
         print("******** Select your doctor")
         
+        //on liste les personnages en vie et ceux qui ont une valeur de soin supérieur à 0
             for character in team {
                 if character.healing > 0 && character.lifePoint > 0 {
                     print("\(index) - \(character.name)"
@@ -271,10 +273,13 @@ extension Player {
                 }
                 index += 1
             }
+        //on récupère le choix de l'utilisateur
         doctor = chooseDoctor()
         
         print("******** Select your hero to be treating")
             index = 1
+        
+        //on liste les personnes qui sont encore en vie
             for character in team {
                 if character.lifePoint > 0 {
                     print("\(index) - \(character.name)"
@@ -283,9 +288,12 @@ extension Player {
                 index += 1
             }
         
+        
+        // on récupère le choix de l'utilisateur et on ajoute les points de vie
         heroWounded = chooseHeroWounded()
         heroWounded.lifePoint += doctor
         
+        // on informe du succès du soins.
         print("\(heroWounded.name) was treated: \n❤️ \(heroWounded.lifePoint)")
     }
     
@@ -297,6 +305,8 @@ extension Player {
             choice = readLine() ?? ""
             switch choice {
             case "1":
+                
+                // on vérifie que la personne choisie soit en vie et possède une valeur de soins suffisante pour soigner
                 if team[0].healing > 0 && team[0].lifePoint > 0 {
                     doctor = team[0].healing
                 } else {
@@ -304,6 +314,8 @@ extension Player {
                     choice = ""
                 }
             case "2":
+                
+                // on vérifie que la personne choisie soit en vie et possède une valeur de soins suffisante pour soigner
                 if team[1].healing > 0 && team[1].lifePoint > 0 {
                     doctor = team[1].healing
                 } else {
@@ -311,6 +323,8 @@ extension Player {
                     choice = ""
                 }
             case "3":
+                
+                // on vérifie que la personne choisie soit en vie et possède une valeur de soins suffisante pour soigner
                 if team[2].healing > 0 && team[2].lifePoint > 0 {
                     doctor = team[1].healing
                 } else {
@@ -332,6 +346,7 @@ extension Player {
             choice = readLine() ?? ""
             switch choice {
             case "1":
+                // on vérifie que la personne choisie soit en vie
                 if team[0].lifePoint > 0 {
                     heroWounded = team[0]
                 } else {
@@ -339,6 +354,8 @@ extension Player {
                     choice = ""
                 }
             case "2":
+                
+                // on vérifie que la personne choisie soit en vie
                 if team[1].lifePoint > 0 {
                     heroWounded = team[1]
                 } else {
@@ -347,6 +364,8 @@ extension Player {
                 }
                 
             case "3":
+                
+                // on vérifie que la personne choisie soit en vie
                 if team[2].lifePoint > 0 {
                     heroWounded = team[1]
                 } else {
