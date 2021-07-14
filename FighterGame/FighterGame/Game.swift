@@ -25,7 +25,8 @@ class Game {
     func launchGame() {
         // on boucle à l'infinie pour recommencer une nouvelle partie
         while choice == "" {
-            print("Tap 1 for start new game")
+            print("Tap 1 for start new game"
+                    + "\nTap 2 for exit")
             choice = readLine() ?? ""
             switch choice {
             case "1":
@@ -34,12 +35,17 @@ class Game {
                 gameContinue = true
                 print("Start new game")
                 startNewGame()
+                choice = ""
+            case "2":
+                
+                //pour sortir du while et quitter l'application
+                break
+                
             default:
                 print("I don't understand your choice")
                 choice = ""
             }
             // permet de boucler à l'infinie
-           choice = ""
         }
     }
     
@@ -149,26 +155,28 @@ extension Game {
             // on vérifie qui doit jouer
             if playerOne.playing == true {
                 print("\(playerOne.name) Attack !")
-                
-                // on force a renter dans la boucle while
                 choice = ""
                 while choice == "" {
                     
                     // on demande ce que l'utilisateur veut effectuer
-                    print("What do you want do: " + "\n- 1 - Attack" + "\n- 2 - Healing")
+                    print("What do you want do: "
+                            + "\n- 1 - Attack"
+                            + "\n- 2 - Healing")
                     choice = readLine() ?? ""
                     switch choice {
-                    case "1":
-                        
-                        // on fait une attack
-                        playerOne.attack(playerDefense: playerTwo, weaponBonus: present)
-                    case "2":
-                        
-                        // on soigne
-                        playerOne.healing()
-                    default:
-                        print("I don't understand your response. \nTry again please")
-                        choice = ""
+                        case "1":
+                
+                            // on fait une attack
+                            playerOne.attack(playerDefense: playerTwo, weaponBonus: present)
+                            gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
+                        case "2":
+                            
+                            // on soigne
+                            playerOne.healing()
+                            
+                        default:
+                            print("I don't understand your response. \nTry again please")
+                            choice = ""
                     }
                 }
                 // une fois l'acton faite on décharge le cadeau et on change le tour du joueur
@@ -181,16 +189,21 @@ extension Game {
                 print("\(playerTwo.name) Attack !")
                 choice = ""
                 while choice == "" {
-                    print("What do you want do: " + "\n- 1 - Attack" + "\n- 2 - Healing")
+                    print("What do you want do: "
+                            + "\n- 1 - Attack"
+                            + "\n- 2 - Healing")
                     choice = readLine() ?? ""
                     switch choice {
-                    case "1":
-                        playerTwo.attack(playerDefense: playerOne, weaponBonus: present)
-                    case "2":
-                        playerTwo.healing()
-                    default:
-                        print("I don't understand your response. \nTry again please")
-                        choice = ""
+                        case "1":
+                            playerTwo.attack(playerDefense: playerOne, weaponBonus: present)
+                            
+                            // on vérifie s'il y a encore des joueurs après l'attaque
+                            gameContinue = checkGameContinue(playerDefense: playerOne, playerAttack: playerTwo)
+                        case "2":
+                            playerTwo.healing()
+                        default:
+                            print("I don't understand your response. \nTry again please")
+                            choice = ""
                     }
                 }
                 present = nil
@@ -202,7 +215,7 @@ extension Game {
 }
 
 
-// create bonus
+//  bonus
 extension Game {
     private func randomBonus()-> Weapons{
         
@@ -214,5 +227,58 @@ extension Game {
         
         // on sélectionne aléatoirement une arme
         return cataloguesWeapons[Int.random(in: 0...max)]
+    }
+    
+    func questionUsePresent() -> Bool {
+       var choice = ""
+       var usePresentOrNot = false
+       
+       while choice == "" {
+           choice = readLine() ?? ""
+           
+           switch choice {
+               case "1":
+                   
+                   // on passe la variable à true si on utilise le bonus
+                   print("you choose a present")
+                   usePresentOrNot = true
+                   
+               case "2":
+                   
+                   // on passe la variable à false si on utilise pas le bonus
+                   print("You choose your hero")
+                   usePresentOrNot = false
+               default:
+                   print("I don't understand")
+                   choice = ""
+           }
+       }
+       return usePresentOrNot
+   }
+}
+
+extension Game {
+    func checkGameContinue(playerDefense: Player, playerAttack: Player) -> Bool {
+        var index = 0
+        // on vérifie si le jeux continue en comptant le nombre de personnage ayant des points de vie
+            for character in playerDefense.team {
+                if character.lifePoint > 0 {
+                } else {
+                    
+                    // on ajoute 1 a chaque personnage mort
+                    index += 1
+                }
+            }
+        
+        // si on a compté 3 alors tout les personnages sont morts et la partie s'arrête grâce à la variable gameContinue false
+            if index == 3 {
+                
+                // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
+                print("\(playerAttack.name) win")
+                return false
+                
+            } else {
+                return true
+            }
     }
 }
