@@ -43,6 +43,19 @@ class Player {
             index += 1
         }
     }
+    
+    func characterStillAlive() -> Int {
+        var numberCharacter = 0
+      
+            for character in self.team {
+                if character.lifePoint > 0 {
+                    // on compte le nombre de personnage encore en vie
+                    numberCharacter += 1
+                }
+            }
+        return numberCharacter
+    }
+    
 }
 
 // Attack
