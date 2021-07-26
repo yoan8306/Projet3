@@ -212,31 +212,6 @@ extension Player {
         }
         return heroDefense
     }
-    
-    
-//    private func checkGameContinue(playerDefense: Player) -> Bool {
-//    var index = 0
-//    // on vérifie si le jeux continue en comptant le nombre de personnage ayant des points de vie
-//        for character in playerDefense.team {
-//            if character.lifePoint > 0 {
-//            } else {
-//                
-//                // on ajoute 1 a chaque personnage mort
-//                index += 1
-//            }
-//        }
-//    
-//    // si on a compté 3 alors tout les personnages sont morts et la partie s'arrête grâce à la variable gameContinue false
-//        if index == 3 {
-//            
-//            // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
-//            print("\(name) win")
-//            return false
-//            
-//        } else {
-//            return true
-//        }
-//    }
 }
 
 // Healing

@@ -35,6 +35,8 @@ class Game {
                 gameContinue = true
                 print("Start new game")
                 startNewGame()
+                
+                // choice = "" afin de relancer une nouvelle partie
                 choice = ""
             case "2":
                 
@@ -45,7 +47,6 @@ class Game {
                 print("I don't understand your choice")
                 choice = ""
             }
-            // permet de boucler à l'infinie
         }
     }
     
@@ -163,20 +164,23 @@ extension Game {
                             + "\n- 1 - Attack"
                             + "\n- 2 - Healing")
                     choice = readLine() ?? ""
+                    
                     switch choice {
-                        case "1":
-                
-                            // on fait une attack
-                            playerOne.attack(playerDefense: playerTwo, weaponBonus: present)
-                            gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
-                        case "2":
-                            
-                            // on soigne
-                            playerOne.healing()
-                            
-                        default:
-                            print("I don't understand your response. \nTry again please")
-                            choice = ""
+                    
+                    case "1":
+                        
+                        // on fait une attack
+                        playerOne.attack(playerDefense: playerTwo, weaponBonus: present)
+                        // après l'attaque on vérifie si la partie doit continuer ou s'arrêter
+                        gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
+                    case "2":
+                        
+                        // on soigne
+                        playerOne.healing()
+                        
+                    default:
+                        print("I don't understand your response. \nTry again please")
+                        choice = ""
                     }
                 }
                 // une fois l'acton faite on décharge le cadeau et on change le tour du joueur
@@ -194,16 +198,17 @@ extension Game {
                             + "\n- 2 - Healing")
                     choice = readLine() ?? ""
                     switch choice {
-                        case "1":
-                            playerTwo.attack(playerDefense: playerOne, weaponBonus: present)
-                            
-                            // on vérifie s'il y a encore des joueurs après l'attaque
-                            gameContinue = checkGameContinue(playerDefense: playerOne, playerAttack: playerTwo)
-                        case "2":
-                            playerTwo.healing()
-                        default:
-                            print("I don't understand your response. \nTry again please")
-                            choice = ""
+                    
+                    case "1":
+                        playerTwo.attack(playerDefense: playerOne, weaponBonus: present)
+                        
+                        // on vérifie s'il y a encore des joueurs après l'attaque
+                        gameContinue = checkGameContinue(playerDefense: playerOne, playerAttack: playerTwo)
+                    case "2":
+                        playerTwo.healing()
+                    default:
+                        print("I don't understand your response. \nTry again please")
+                        choice = ""
                     }
                 }
                 present = nil
@@ -230,31 +235,32 @@ extension Game {
     }
     
     func questionUsePresent() -> Bool {
-       var choice = ""
-       var usePresentOrNot = false
-       
-       while choice == "" {
-           choice = readLine() ?? ""
-           
-           switch choice {
-               case "1":
-                   
-                   // on passe la variable à true si on utilise le bonus
-                   print("you choose a present")
-                   usePresentOrNot = true
-                   
-               case "2":
-                   
-                   // on passe la variable à false si on utilise pas le bonus
-                   print("You choose your hero")
-                   usePresentOrNot = false
-               default:
-                   print("I don't understand")
-                   choice = ""
-           }
-       }
-       return usePresentOrNot
-   }
+        // par défaut on utilise pas le bonus car il n'existe pas toujours
+        var usePresentOrNot = false
+        var choice = ""
+        
+        while choice == "" {
+            choice = readLine() ?? ""
+            
+            switch choice {
+            case "1":
+                
+                // on passe la variable à true si on utilise le bonus
+                print("you choose a present")
+                usePresentOrNot = true
+                
+            case "2":
+                
+                // on passe la variable à false si on utilise pas le bonus
+                print("You choose your hero")
+                usePresentOrNot = false
+            default:
+                print("I don't understand")
+                choice = ""
+            }
+        }
+        return usePresentOrNot
+    }
 }
 
 extension Game {
