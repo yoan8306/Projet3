@@ -8,7 +8,6 @@
 import Foundation
 var gameContinue: Bool
 var newGame: Game = Game()
-var choice = ""
 
 newGame.launchGame()
 

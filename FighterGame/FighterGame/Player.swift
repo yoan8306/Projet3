@@ -80,14 +80,14 @@ extension Player {
             // on met l'index à 1 pour obtenir le bon numéro pour le choix de l'utilisateur
             index = 1
             print("--------- Select your Hero for attack.--------------")
-            for heroAttack in team {
+            for character in team {
                 
                 //on ne liste que les personnages en vie
-                if heroAttack.lifePoint > 0 {
-                    print("- \(index) - \(heroAttack.name)"
-                            + "\n❤️: \(heroAttack.lifePoint)"
-                            + "\n⚔️\(heroAttack.weapon)"
-                            + "\n❤️‍🩹: \(heroAttack.healing)"
+                if character.lifePoint > 0 {
+                    print("- \(index) - \(character.name)"
+                            + "\n❤️: \(character.lifePoint)"
+                            + "\n⚔️\(character.weapon)"
+                            + "\n❤️‍🩹: \(character.healing)"
                             + "\n*********************")
                     index += 1
                 } else {
@@ -95,7 +95,7 @@ extension Player {
                 }
             }
             // on récupère le choix de l'utilisateur
-            heroAttack = choiceAttack()
+            heroAttack = choiceHeroAttack()
         }
         
         // on remet la valeur à 1
@@ -117,7 +117,7 @@ extension Player {
         }
         
         // on récupère le choix de l'utilisateur
-        heroDefense = choiceDefense(playerDefense: playerDefense)
+        heroDefense = choiceHeroDefense(playerDefense: playerDefense)
         
         // on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
         if usePresent == false {
@@ -131,7 +131,7 @@ extension Player {
     }
     
     
-    private func choiceAttack()-> Character {
+    private func choiceHeroAttack()-> Character {
         var choice = ""
         var heroAttack = team[0]
         while choice == "" {
@@ -172,7 +172,7 @@ extension Player {
         return heroAttack
     }
     
-    private func choiceDefense(playerDefense: Player) -> Character {
+    private func choiceHeroDefense(playerDefense: Player) -> Character {
         var choice = ""
         var heroDefense = playerDefense.team[0]
         while choice == "" {

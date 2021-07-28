@@ -8,7 +8,6 @@
 import Foundation
 
 protocol Weapons {
-    
     // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
     var damages: Int { get }
 }
@@ -41,4 +40,8 @@ struct Rifle: Weapons {
 
 struct Grenade: Weapons {
     var damages = Int.random(in: 1...20)
+}
+
+struct CataloguesWeapons {
+    let all: [Weapons] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
 }

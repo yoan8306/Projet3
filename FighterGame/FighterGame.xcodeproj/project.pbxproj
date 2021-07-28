@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F1E29332685A9C4007AE8B7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1E29322685A9C4007AE8B7 /* Player.swift */; };
 		5F504380268211E500DDC52E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F50437F268211E500DDC52E /* Game.swift */; };
+		5F81C43B26B16F13002508B6 /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F81C43A26B16F13002508B6 /* Bonus.swift */; };
 		5FC4104126793DDE003C88A9 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4104026793DDE003C88A9 /* Character.swift */; };
 		5FC4104326793E29003C88A9 /* Weapons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4104226793E29003C88A9 /* Weapons.swift */; };
 		5FF6D7462678F00300431878 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6D7452678F00300431878 /* main.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		5F1E29322685A9C4007AE8B7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5F50437F268211E500DDC52E /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		5F81C43A26B16F13002508B6 /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
 		5FC4104026793DDE003C88A9 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		5FC4104226793E29003C88A9 /* Weapons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapons.swift; sourceTree = "<group>"; };
 		5FF6D7422678F00300431878 /* FighterGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FighterGame; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,7 @@
 				5FC4104226793E29003C88A9 /* Weapons.swift */,
 				5F50437F268211E500DDC52E /* Game.swift */,
 				5F1E29322685A9C4007AE8B7 /* Player.swift */,
+				5F81C43A26B16F13002508B6 /* Bonus.swift */,
 			);
 			path = FighterGame;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 				5FF6D7462678F00300431878 /* main.swift in Sources */,
 				5F1E29332685A9C4007AE8B7 /* Player.swift in Sources */,
 				5F504380268211E500DDC52E /* Game.swift in Sources */,
+				5F81C43B26B16F13002508B6 /* Bonus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

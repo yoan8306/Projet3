@@ -13,7 +13,8 @@ class Game {
     var index = 1
     var choice = ""
     var numberRound : Int = 0
-    var present: Weapons?
+    var numberBonus: Int = 0
+    var bonus: Weapons?
     
     //on initialise le nom des joueurs par défaut
     init() {
@@ -26,7 +27,7 @@ class Game {
         // on boucle à l'infinie pour recommencer une nouvelle partie
         while choice == "" {
             print("Tap 1 for start new game"
-                    + "\nTap 2 for exit")
+                + "\nTap 2 for exit")
             choice = readLine() ?? ""
             switch choice {
             case "1":
@@ -59,14 +60,10 @@ class Game {
         roundByRound()
         
         // les caractéristiques du jeux que l'on informe
-        //nombre de tour du jeux
         print("\nYou have played \(numberRound) round"
-                
-                //liste de l'équipe 1 avec les caractéristiques de chaque personnage
+                + "\nYou have \(numberBonus) bonus"
                 + "\n############ \(playerOne.name) your team was: ")
         playerOne.listTeam()
-        
-        //liste de l'équipe 1 avec les caractéristiques de chaque personnage
         print("\n############ \(playerTwo.name) your team was: ")
         playerTwo.listTeam()
         print("Game Over")
@@ -87,8 +84,8 @@ extension Game {
             // on récupère le nom du joueur inscrit par l'utilisateur
             var newName = readLine()
             
-            // on boucle tant que characterNameExist n'est pas different de faux
-                while characterNameExist(newName: newName ?? "") == false {
+            // on boucle tant que characterNameNotExist n'est pas different de faux
+                while characterNameNotExist(newName: newName ?? "") == false {
                     
                     //sinon on demande un nouveau nom
                     newName = readLine()
@@ -107,7 +104,7 @@ extension Game {
         player.listTeam()
     }
     
-    func characterNameExist(newName: String) ->Bool {
+    func characterNameNotExist(newName: String) ->Bool {
         // on vérifie que le paramètre soit bien renseigné sinon la fonction renvoie la valeur faux avec le message associé.
         if newName == "" {
             print("I don't understand your response. \nTry again please.")
@@ -129,7 +126,7 @@ extension Game {
     
     private func roundByRound() {
         // on initialise le bonus avec un nombre aléatoire de 1 à 5
-        var bonus : Int = Int.random(in: 1...5)
+        var roundForBonus : Int = Int.random(in: 1...5)
         choice = ""
         
         // on vérifie que gameContinue ne soit pas faux
@@ -139,18 +136,18 @@ extension Game {
             numberRound += 1
             
             // on vérifie que le nombre de tour correspond au nombre bonus
-            if numberRound == bonus {
+            if numberRound == roundForBonus {
                 
                 //on informe l'utilisateur qu'il a obtenu u bonus et on initialise le cadeau "present" avec une arme aléatoire
                 print("You have bonus")
-                present = randomBonus()
-                
+                bonus = Bonus().createBonus()
+                numberBonus += 1
                 // ajoute un nombre aléatoire pour le prochain bonus
-                bonus += Int.random(in: 1...5)
+                roundForBonus += Int.random(in: 1...5)
             } else {
                 
                 // sinon le cadeau vaut nil
-                present = nil
+                bonus = nil
             }
             
             // on vérifie qui doit jouer
@@ -170,7 +167,7 @@ extension Game {
                     case "1":
                         
                         // on fait une attack
-                        playerOne.attack(playerDefense: playerTwo, weaponBonus: present)
+                        playerOne.attack(playerDefense: playerTwo, weaponBonus: bonus)
                         // après l'attaque on vérifie si la partie doit continuer ou s'arrêter
                         gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
                     case "2":
@@ -184,7 +181,7 @@ extension Game {
                     }
                 }
                 // une fois l'acton faite on décharge le cadeau et on change le tour du joueur
-                present = nil
+                bonus = nil
                 playerOne.playing = false
                 playerTwo.playing = true
                 
@@ -200,7 +197,7 @@ extension Game {
                     switch choice {
                     
                     case "1":
-                        playerTwo.attack(playerDefense: playerOne, weaponBonus: present)
+                        playerTwo.attack(playerDefense: playerOne, weaponBonus: bonus)
                         
                         // on vérifie s'il y a encore des joueurs après l'attaque
                         gameContinue = checkGameContinue(playerDefense: playerOne, playerAttack: playerTwo)
@@ -211,7 +208,7 @@ extension Game {
                         choice = ""
                     }
                 }
-                present = nil
+                bonus = nil
                 playerOne.playing = true
                 playerTwo.playing = false
             }
@@ -222,18 +219,6 @@ extension Game {
 
 //  bonus
 extension Game {
-    private func randomBonus()-> Weapons{
-        
-        // on créée un tableau avec les armes bonus
-        let cataloguesWeapons: [Weapons] = [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
-        
-        //on récupère la valeur max du tableau
-        let max = cataloguesWeapons.count - 1
-        
-        // on sélectionne aléatoirement une arme
-        return cataloguesWeapons[Int.random(in: 0...max)]
-    }
-    
     func questionUsePresent() -> Bool {
         // par défaut on utilise pas le bonus car il n'existe pas toujours
         var usePresentOrNot = false
