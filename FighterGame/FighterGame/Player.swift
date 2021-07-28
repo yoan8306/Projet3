@@ -10,7 +10,7 @@ import Foundation
 class Player {
     var name: String
     var team: [Character] = []
-    var playing = false
+    var playing = true
     
     // on initialise le nom du joueur automatiquement
     init(name: String) {
