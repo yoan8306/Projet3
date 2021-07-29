@@ -11,10 +11,8 @@ class Game {
     var playerOne: Player
     var playerTwo: Player
     var index = 1
-    var choice = ""
-    var numberRound : Int = 0
-    var numberBonus: Int = 0
-    var bonus: Weapons?
+    var numberRound = 0
+    var numberBonus = 0
     
     //on initialise le nom des joueurs par défaut
     init() {
@@ -24,6 +22,7 @@ class Game {
     
     
     func launchGame() {
+        var choice = ""
         // on boucle à l'infinie pour recommencer une nouvelle partie
         while choice == "" {
             print("Tap 1 for start new game"
@@ -59,7 +58,11 @@ class Game {
         //combat tour par tour jusqu'a la sortie de la fonction
         roundByRound()
         
-        // les caractéristiques du jeux que l'on informe
+        // les caractéristiques du jeux
+        presentStatistic()
+    }
+    
+    private func presentStatistic() {
         print("\nYou have played \(numberRound) round"
                 + "\nYou have \(numberBonus) bonus"
                 + "\n############ \(playerOne.name) your team was: ")
@@ -69,6 +72,8 @@ class Game {
         print("Game Over")
     }
 }
+
+
 
 
 // check character name already exist
@@ -125,9 +130,10 @@ extension Game {
 extension Game {
     
     private func roundByRound() {
+        var bonus: Weapon?
         // on initialise le bonus avec un nombre aléatoire de 1 à 5
         var roundForBonus : Int = Int.random(in: 1...5)
-        choice = ""
+        var choice = ""
         
         // on vérifie que gameContinue ne soit pas faux
         while gameContinue {
@@ -219,9 +225,9 @@ extension Game {
 
 //  bonus
 extension Game {
-    func questionUsePresent() -> Bool {
+  static func questionUsePresent() -> Bool {
         // par défaut on utilise pas le bonus car il n'existe pas toujours
-        var usePresentOrNot = false
+        var useBonusOrNot = false
         var choice = ""
         
         while choice == "" {
@@ -232,19 +238,19 @@ extension Game {
                 
                 // on passe la variable à true si on utilise le bonus
                 print("you choose a present")
-                usePresentOrNot = true
+                useBonusOrNot = true
                 
             case "2":
                 
                 // on passe la variable à false si on utilise pas le bonus
                 print("You choose your hero")
-                usePresentOrNot = false
+                useBonusOrNot = false
             default:
                 print("I don't understand")
                 choice = ""
             }
         }
-        return usePresentOrNot
+        return useBonusOrNot
     }
 }
 

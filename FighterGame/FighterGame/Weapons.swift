@@ -7,41 +7,41 @@
 
 import Foundation
 
-protocol Weapons {
+protocol Weapon {
     // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
     var damages: Int { get }
 }
 
 
 // j'utilise des structures car il n'y a pas de logique à gérer.
-struct Knife: Weapons {
+struct Knife: Weapon {
     var damages = Int.random(in: 1...5)
 }
 
-struct Gun: Weapons {
+struct Gun: Weapon {
     var damages = Int.random(in: 10...14)
 }
 
-struct Rocket: Weapons {
+struct Rocket: Weapon {
     var damages = Int.random(in: 15...25)
 }
 
-struct Boomerang: Weapons {
+struct Boomerang: Weapon {
     var damages = Int.random(in: 1...9)
 }
 
-struct Flamethrower: Weapons {
+struct Flamethrower: Weapon {
     var damages = Int.random(in: 10...20)
 }
 
-struct Rifle: Weapons {
+struct Rifle: Weapon {
     var damages = Int.random(in: 10...20)
 }
 
-struct Grenade: Weapons {
+struct Grenade: Weapon {
     var damages = Int.random(in: 1...20)
 }
 
 struct CataloguesWeapons {
-    let all: [Weapons] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
+    let all: [Weapon] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
 }

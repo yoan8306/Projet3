@@ -10,7 +10,7 @@ import Foundation
 class Character {
     var name: String
     var lifePoint = 5
-    var weapon: Weapons
+    var weapon: Weapon
     var healing = 0
    
     // on créée un personnages avec une arme aux hasard et une valeur de soins aléatoire

@@ -68,10 +68,10 @@
 			isa = PBXGroup;
 			children = (
 				5FF6D7452678F00300431878 /* main.swift */,
-				5FC4104026793DDE003C88A9 /* Character.swift */,
-				5FC4104226793E29003C88A9 /* Weapons.swift */,
 				5F50437F268211E500DDC52E /* Game.swift */,
 				5F1E29322685A9C4007AE8B7 /* Player.swift */,
+				5FC4104026793DDE003C88A9 /* Character.swift */,
+				5FC4104226793E29003C88A9 /* Weapons.swift */,
 				5F81C43A26B16F13002508B6 /* Bonus.swift */,
 			);
 			path = FighterGame;

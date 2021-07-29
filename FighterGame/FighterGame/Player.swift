@@ -61,22 +61,23 @@ class Player {
 // Attack
 extension Player {
     
-     func attack(playerDefense: Player, weaponBonus: Weapons?)  {
+     func attack(playerDefense: Player, weaponBonus: Weapon?)  {
         var heroAttack : Character = team[0]
         var heroDefense : Character
         var index = 0
         // par défaut usePresent et false car si il n'y a pas de bonus on n'exécutera pas le code associé.
-        var usePresent = false
+        var useBonus = false
         
         // on vérifie notre paramètre s'il y a un bonus
         if weaponBonus != nil {
             print("Congratulation! \nTap 1- for use \(weaponBonus!) \nTap 2- you select your hero")
             // on demande si on utilise le bonus ou non
-            usePresent = Game().questionUsePresent()
+            useBonus = Game.questionUsePresent()
         }
         
         //on vérifie si on doit utiliser le bonus ou si on doit sélectionner un attaquant.
-        if usePresent == false {
+        if useBonus == false {         
+            
             // on met l'index à 1 pour obtenir le bon numéro pour le choix de l'utilisateur
             index = 1
             print("--------- Select your Hero for attack.--------------")
@@ -120,7 +121,7 @@ extension Player {
         heroDefense = choiceHeroDefense(playerDefense: playerDefense)
         
         // on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
-        if usePresent == false {
+        if useBonus == false {
             heroDefense.lifePoint -=  heroAttack.weapon.damages
         } else {
             heroDefense.lifePoint -= weaponBonus!.damages
