@@ -7,15 +7,31 @@
 
 import Foundation
 
-protocol Weapons {
-    // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
-    var damages: Int { get }
+class Weapon {
+    var damage: Int
+    
+    static var allWeapons: [Weapons] {
+        // catalogue d'armes
+        
+        []
+    }
+    
+    init(damage: Int) {
+        self.damage = damage
+    }
 }
+
+//protocol Weapons {
+//    // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
+//    var damages: Int { get }
+//}
 
 
 // j'utilise des structures car il n'y a pas de logique à gérer.
-struct Knife: Weapons {
-    var damages = Int.random(in: 1...5)
+class Knife: Weapon {
+    override init(damage: Int) {
+        super.init(damage: Int.random(in: 1...5))
+    }
 }
 
 struct Gun: Weapons {
@@ -42,6 +58,6 @@ struct Grenade: Weapons {
     var damages = Int.random(in: 1...20)
 }
 
-struct CataloguesWeapons {
-    let all: [Weapons] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
-}
+//struct CataloguesWeapons {
+//    let all: [Weapons] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
+//}

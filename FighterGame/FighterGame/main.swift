@@ -6,8 +6,9 @@
 //
 
 import Foundation
+
 var gameContinue: Bool
-var newGame: Game = Game()
+var newGame = Game()
 
 newGame.launchGame()
 

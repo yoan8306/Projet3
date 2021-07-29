@@ -9,7 +9,7 @@ import Foundation
 
 struct Bonus {
     
-    func createBonus() ->Weapons {
+    static func createBonus() -> Weapons {
         //on récupère la valeur max du catalogue d'armes
         let max = CataloguesWeapons().all.count - 1
         
