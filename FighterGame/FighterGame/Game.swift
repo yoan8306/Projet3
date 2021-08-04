@@ -11,15 +11,10 @@ class Game {
     var playerOne: Player
     var playerTwo: Player
     var index = 1
-<<<<<<< HEAD
-    var numberRound = 0
-    var numberBonus = 0
-=======
-    
     var numberRound : Int = 0
     var numberBonus: Int = 0
     var bonus: Weapon?
->>>>>>> review
+
     
     //on initialise le nom des joueurs par défaut
     init() {
@@ -144,12 +139,6 @@ extension Game {
 extension Game {
     
     private func roundByRound() {
-<<<<<<< HEAD
-        var bonus: Weapon?
-        // on initialise le bonus avec un nombre aléatoire de 1 à 5
-        var roundForBonus : Int = Int.random(in: 1...5)
-        var choice = ""
-=======
         var choice = ""
         var gameContinue = true
         var attackingPlayer = playerOne
@@ -157,7 +146,6 @@ extension Game {
         
         // on initialise le bonus avec un nombre aléatoire de 1 à 5
         var roundForBonus : Int = Int.random(in: 1...5)
->>>>>>> review
         
         // on vérifie que gameContinue ne soit pas faux
         while gameContinue {
