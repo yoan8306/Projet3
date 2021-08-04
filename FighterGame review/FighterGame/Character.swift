@@ -11,17 +11,20 @@ class Character {
     var name: String
     var lifePoint = 5
     var weapon: Weapon
+    // mettre direct random
     var healing = 0
    
     // on créée un personnages avec une arme aux hasard et une valeur de soins aléatoire
     init (newName: String) {
         
         // on récupère la valeur max du catalogues d'armes
-        let max = Weapon.allWeapons.count - 1
+//        let max = CataloguesWeapons().all.count - 1
         
         // on attribut les caractéristiques du personnage
         name = newName
-        weapon = Weapon.allWeapons[Int.random(in: 0...max)]
+        // faire le random dans un fonction statique de la classe weapon
+        // Weapon.randomWeapon()
+        weapon = CataloguesWeapons().all[Int.random(in: 0...max)]
         healing = Int.random(in: 0...8)
     }
     

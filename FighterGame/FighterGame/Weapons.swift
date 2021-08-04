@@ -7,41 +7,64 @@
 
 import Foundation
 
-protocol Weapons {
-    // valeur de l'arme en lecture seul != elle ne peut pas être modifié une fois que l'arme à été créée
-    var damages: Int { get }
+class Weapon {
+    var damage: Int
+    var name: String
+    
+    static var allWeapons: [Weapon] {
+        [Knife(damage: 0, name: "Knife"),
+         Gun(damage: 0, name: "Gun"),
+         Rocket(damage: 0, name: "Rocket"),
+         Boomerang(damage: 0, name: "Boomerang"),
+         Flamethrower(damage: 0, name: "Flamethrower"),
+         Rifle(damage: 0, name: "Rifle"),
+         Grenade(damage: 0, name: "Grenade") ]
+    }
+    
+    init(damage: Int, name: String) {
+        self.damage = damage
+        self.name = name
+    }
 }
 
-
-// j'utilise des structures car il n'y a pas de logique à gérer.
-struct Knife: Weapons {
-    var damages = Int.random(in: 1...5)
+class Knife: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 1...5), name: "Knife")
+    }
 }
 
-struct Gun: Weapons {
-    var damages = Int.random(in: 10...14)
+class Gun: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 10...14), name: "Gun")
+    }
 }
 
-struct Rocket: Weapons {
-    var damages = Int.random(in: 15...25)
+class Rocket: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 15...25), name: "Rocket")
+    }
 }
 
-struct Boomerang: Weapons {
-    var damages = Int.random(in: 1...9)
+class Boomerang: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 1...10), name: "Boomerang")
+    }
 }
 
-struct Flamethrower: Weapons {
-    var damages = Int.random(in: 10...20)
+class Flamethrower: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 10...20), name: "Flamethrower")
+    }
 }
 
-struct Rifle: Weapons {
-    var damages = Int.random(in: 10...20)
+class Rifle: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 10...20), name: "Rifle")
+    }
 }
 
-struct Grenade: Weapons {
-    var damages = Int.random(in: 1...20)
-}
-
-struct CataloguesWeapons {
-    let all: [Weapons] =  [Knife(), Gun(), Rocket(), Boomerang(), Flamethrower(), Rifle(), Grenade()]
+class Grenade: Weapon {
+    override init(damage: Int, name: String) {
+        super.init(damage: Int.random(in: 1...20), name: "Grenade")
+    }
 }

@@ -11,10 +11,10 @@ class Game {
     var playerOne: Player
     var playerTwo: Player
     var index = 1
-    
+    var choice = ""
     var numberRound : Int = 0
     var numberBonus: Int = 0
-    var bonus: Weapon?
+    var bonus: Weapons?
     
     //on initialise le nom des joueurs par défaut
     init() {
@@ -24,7 +24,6 @@ class Game {
     
     
     func launchGame() {
-        var choice = ""
         // on boucle à l'infinie pour recommencer une nouvelle partie
         while choice == "" {
             print("Tap 1 for start new game"
@@ -34,6 +33,7 @@ class Game {
             case "1":
                 
                 // on sélectionne 1 pour commencer une nouvelle partie et on remet gameContinue sur true pour une nouvelle partie
+                gameContinue = true
                 print("Start new game")
                 startNewGame()
                 
@@ -60,16 +60,17 @@ class Game {
         roundByRound()
         
         // les caractéristiques du jeux que l'on informe
-        statistic()
+        presentStatistic()
     }
     
-    private func statistic() {
+    func presentStatistic() {
+        
         print("\nYou have played \(numberRound) round"
                 + "\nYou have \(numberBonus) bonus"
                 + "\n############ \(playerOne.name) your team was: ")
-        playerOne.listAllCharacters()
+        playerOne.listTeam()
         print("\n############ \(playerTwo.name) your team was: ")
-        playerTwo.listAllCharacters()
+        playerTwo.listTeam()
         print("Game Over")
     }
 }
@@ -83,43 +84,45 @@ extension Game {
         
         // on boucle tant que nous n'avons pas nos 3 personnages
         for index in 1...3 {
-            print("Enter name of personage \(index)")
-            
-            // on récupère le nom du joueur inscrit par l'utilisateur
-            var newName = readLine()
-            
-            // on boucle tant que characterNameNotExist n'est pas different de faux
-            while characterNameNotExist(newName: newName ?? "") == false {
-                
-                //sinon on demande un nouveau nom
-                newName = readLine()
-            }
-            
-            // créée une nouvelle personne
-            let newPerson: Character = Character(newName: newName ?? "")
-            newPerson.name = newName ?? ""
-            print("\(newPerson.name) has added in your team ")
-            player.team.append(newPerson)
+            createCharacter(player: player, index: index)
         }
         print("Successful! \n your team is create")
         print("-------\(player.name) your team is: -----------")
         
         // on liste l'équipe créée
-        player.listAllCharacters()
+        player.listTeam()
+    }
+    
+    func createCharacter(player: Player, index: Int) {
+        print("Enter name of personage \(index)")
+        // on récupère le nom du joueur inscrit par l'utilisateur
+        var newName = readLine()
         
-        func characterNameNotExist(newName: String) ->Bool {
-            // on vérifie que le paramètre soit bien renseigné sinon la fonction renvoie la valeur faux avec le message associé.
-            if newName == "" {
-                print("I don't understand your response. \nTry again please.")
-                return false
-                
-                // on vérifie que le nom ne soit pas présent dans une des deux équipes
-            } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) { // on vérifie dans les deux équipes le nom
-                print("This name already exist in a teams. \nTry again please.")
-                return false
-            } else {
-                return true
-            }
+        // on boucle tant que characterNameNotExist n'est pas different de faux
+        while characterNameNotExist(newName: newName ?? "") == false {
+            //sinon on demande un nouveau nom
+            newName = readLine()
+        }
+        
+        // créée une nouvelle personne
+        let newPerson: Character = Character(newName: newName ?? "")
+            newPerson.name = newName ?? ""
+            print("\(newPerson.name) has added in your team ")
+            player.team.append(newPerson)
+    }
+    
+    func characterNameNotExist(newName: String) -> Bool {
+        // on vérifie que le paramètre soit bien renseigné sinon la fonction renvoie la valeur faux avec le message associé.
+        if newName == "" {
+            print("I don't understand your response. \nTry again please.")
+            return false
+            
+            // on vérifie que le nom ne soit pas présent dans une des deux équipes
+        } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) { // on vérifie dans les deux équipes le nom
+            print("This name already exist in a teams. \nTry again please.")
+            return false
+        } else {
+            return true
         }
     }
 }
@@ -129,10 +132,11 @@ extension Game {
 extension Game {
     
     private func roundByRound() {
-        var choice = ""
-        var gameContinue = true
+        // Initialise bonus variable
+        
         // on initialise le bonus avec un nombre aléatoire de 1 à 5
-        var roundForBonus : Int = Int.random(in: 1...5)
+        var roundForBonus = Int.random(in: 1...5)
+        choice = ""
         
         // on vérifie que gameContinue ne soit pas faux
         while gameContinue {
@@ -141,18 +145,15 @@ extension Game {
             numberRound += 1
             
             // on vérifie que le nombre de tour correspond au nombre bonus
+            bonus = nil
             if numberRound == roundForBonus {
                 
                 //on informe l'utilisateur qu'il a obtenu u bonus et on initialise le cadeau "present" avec une arme aléatoire
                 print("You have bonus")
-                bonus = Bonus().createBonus()
+                bonus = Bonus.createBonus()
                 numberBonus += 1
                 // ajoute un nombre aléatoire pour le prochain bonus
                 roundForBonus += Int.random(in: 1...5)
-            } else {
-                
-                // sinon le cadeau vaut nil
-                bonus = nil
             }
             
             // on vérifie qui doit jouer
@@ -257,29 +258,14 @@ extension Game {
     func checkGameContinue(playerDefense: Player, playerAttack: Player) -> Bool {
         
         // si on 0 alors tout les personnages sont morts et la partie s'arrête grâce à la variable gameContinue false
-        if playerDefense.characterStillAlive() == 0 {
+        if playerDefense.characterStillAlive() == false {
             
             // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
             print("\(playerAttack.name) win")
             return false
+            
         } else {
             return true
         }
-    }
-    
-    func CheckResponse(userChoice: String) -> Int {
-        var choice = ""
-        var response = 1
-        while choice == "" {
-            choice = readLine() ?? ""
-            if let intChoice = Int(choice), [1,2,3].contains(intChoice) {
-                response = intChoice
-            } else {
-                print("I don't understand your response"
-                        + "\nTry again please")
-                choice = ""
-            }
-        }
-        return response
     }
 }

@@ -7,8 +7,10 @@
 
 import Foundation
 
-var newGame: Game = Game()
+var gameContinue: Bool
+var newGame = Game()
 
 newGame.launchGame()
+
 
 
