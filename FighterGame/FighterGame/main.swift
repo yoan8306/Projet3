@@ -7,9 +7,9 @@
 
 import Foundation
 
-//var newGame: Game = Game()
-//
-//newGame.launchGame()
+var newGame: Game = Game()
+
+newGame.launchGame()
 
 
 class InputReadLine {

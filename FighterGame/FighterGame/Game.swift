@@ -158,14 +158,12 @@ extension Game {
                 bonus = nil
             }
             
-            
-            
 //            remplacer avec attackingPlayer et defendingPlayer
             
             
             // on vérifie qui doit jouer
-            if playerOne.playing == true {
-                print("\(playerOne.name) Attack !")
+           
+                print("\(attackingPlayer.name) Attack !")
                 choice = ""
                 while choice == "" {
                     
@@ -182,13 +180,13 @@ extension Game {
                         // on fait une attack
                          let useBonus = askToUseBonus(weaponBonus: bonus)
                             
-                        playerOne.attack(playerDefense: playerTwo, weaponBonus: useBonus ? bonus : nil)
+                        attackingPlayer.attack(playerDefense: defendingPlayer, weaponBonus: useBonus ? bonus : nil)
                         // après l'attaque on vérifie si la partie doit continuer ou s'arrêter
-                        gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
+                        gameContinue = checkGameContinue(playerDefense: defendingPlayer, playerAttack: attackingPlayer)
                     case "2":
                         
                         // on soigne
-                        playerOne.healing()
+                        attackingPlayer.healing()
                         
                     default:
                         print("I don't understand your response. \nTry again please")
@@ -205,7 +203,6 @@ extension Game {
                     attackingPlayer = playerOne
                     defendingPlayer = playerTwo
                 }
-            }
         }
     }
 }
@@ -222,7 +219,7 @@ extension Game {
         var choice = ""
         
         
-        print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage) \nTap 2- you select your hero")
+        print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
         
         while choice == "" {
             choice = readLine() ?? ""

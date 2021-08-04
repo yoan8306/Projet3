@@ -44,10 +44,10 @@ class Player {
         let introduction = attacking ? "Select your Hero for attack." : "Select hero receiving attack."
         print("--------- \(introduction) --------------")
         
-        for i in (0...team.count - 1) {
+        for indexOfCharacter in (0...team.count - 1) {
             //on ne liste que les personnages en vie
-            if characterIsAlive(index: i) {
-//            introduceCharacter(index: i)
+            if characterIsAlive(index: indexOfCharacter) {
+                team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
             }
         }
     }
@@ -57,17 +57,17 @@ class Player {
         print("--------- \(introduction) ---------")
         
         if healing {
-            for i in (0...team.count - 1) {
-                if team[i].healing > 0 && characterIsAlive(index: i) {
-                    print("\(i + 1) - \(team[i].name)"
-                            + "\n❤️‍🩹\(team[i].healing)")
+            for indexOfCharacter in (0...team.count - 1) {
+                if team[indexOfCharacter].healing > 0 && characterIsAlive(index: indexOfCharacter) {
+                    print("\(indexOfCharacter + 1) - \(team[indexOfCharacter].name)"
+                            + "\n❤️‍🩹\(team[indexOfCharacter].healing)")
                 }
             }
         } else {
             
-            for i in (0...team.count - 1) {
-                if characterIsAlive(index: i){
-//                    introduceCharacter(index: i)
+            for indexOfCharacter in (0...team.count - 1) {
+                if characterIsAlive(index: indexOfCharacter){
+                    team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
                 }
             }
         }
