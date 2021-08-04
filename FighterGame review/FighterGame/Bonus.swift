@@ -9,12 +9,12 @@ import Foundation
 
 struct Bonus {
     
-    func createBonus() ->Weapon {
+    static func createBonus() -> Weapons {
         //on récupère la valeur max du catalogue d'armes
-        let max = Weapon.allWeapons.count - 1
+        let max = CataloguesWeapons().all.count - 1
         
         // on sélectionne aléatoirement une arme
-        return Weapon.allWeapons[Int.random(in: 0...max)]
+        return CataloguesWeapons().all[Int.random(in: 0...max)]
     }
     
 }

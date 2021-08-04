@@ -17,13 +17,27 @@ class Character {
     init (newName: String) {
         
         // on récupère la valeur max du catalogues d'armes
-        let max = CataloguesWeapons().all.count - 1
+        let max = Weapon.allWeapons.count - 1
         
         // on attribut les caractéristiques du personnage
         name = newName
-        weapon = CataloguesWeapons().all[Int.random(in: 0...max)]
+        weapon = Weapon.allWeapons[Int.random(in: 0...max)]
         healing = Int.random(in: 0...8)
     }
+
+    func introduceCharacter(index: Int) {
+            
+               var characteristic = "- \(index + 1) - \(name)"
+                        + "\n❤️: \(lifePoint)"
+                        + "\n⚔️: \(weapon.name)(\(weapon.damage))"
+            if healing > 0 {
+             characteristic +=  "\n❤️‍🩹: \(healing)"
+            }
+            
+            characteristic += "\n**********************"
+            
+            print(characteristic)
+        }
     
     
     
