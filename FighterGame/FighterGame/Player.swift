@@ -32,17 +32,11 @@ class Player {
     }
     
     // on imprime le personnage voulu avec les caractéristiques
-    func printCharacter(index: Int) {
-            print("- \(index + 1) - \(self.team[index].name)"
-                    + "\n❤️: \(self.team[index].lifePoint)"
-                    + "\n⚔️: \(self.team[index].weapon.name)(\(self.team[index].weapon.damage))"
-                    + "\n❤️‍🩹: \(self.team[index].healing)"
-                    + "\n**********************")
-    }
+    
     
     func listAllCharacters() {
-        for i in (0...team.count - 1) {
-            printCharacter(index: i)
+        for indexOfCharacter in (0...team.count - 1) {
+            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
         }
     }
     
@@ -53,7 +47,7 @@ class Player {
         for i in (0...team.count - 1) {
             //on ne liste que les personnages en vie
             if characterIsAlive(index: i) {
-            printCharacter(index: i)
+//            introduceCharacter(index: i)
             }
         }
     }
@@ -72,8 +66,8 @@ class Player {
         } else {
             
             for i in (0...team.count - 1) {
-                if self.team[i].lifePoint > 0 {
-                    printCharacter(index: i)
+                if characterIsAlive(index: i){
+//                    introduceCharacter(index: i)
                 }
             }
         }
@@ -105,19 +99,11 @@ class Player {
 extension Player {
     
      func attack(playerDefense: Player, weaponBonus: Weapon?)  {
-        var heroAttack : Character = team[0]
-        var heroDefense : Character
-        var usePresent: Bool?
-        
-//         on vérifie notre paramètre s'il y a un bonus
-        if let bonusWeapon = weaponBonus {
-            print("Congratulation! \nTap 1- for use \(bonusWeapon.name)(\(bonusWeapon.damage) \nTap 2- you select your hero")
-            // on demande si on utilise le bonus ou non
-            usePresent = Game().questionUsePresent()
-        }
-        
+        var heroAttack: Character = team[0]
+        var heroDefense: Character
+    
 //        on vérifie si on doit utiliser le bonus ou si on doit sélectionner un attaquant.
-        if usePresent == false || usePresent == nil {
+        if weaponBonus == nil {
             showTeam(attacking: true)
 //       on récupère le choix de l'utilisateur
             heroAttack = choiceHero()
@@ -130,7 +116,7 @@ extension Player {
         heroDefense = playerDefense.choiceHero()
         
 //         on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
-        if usePresent == false || usePresent == nil {
+        if weaponBonus == nil {
             heroDefense.lifePoint -=  heroAttack.weapon.damage
         } else if let bonusWeapon = weaponBonus {
             heroDefense.lifePoint -= bonusWeapon.damage

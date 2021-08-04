@@ -7,8 +7,21 @@
 
 import Foundation
 
-var newGame: Game = Game()
+//var newGame: Game = Game()
+//
+//newGame.launchGame()
 
-newGame.launchGame()
 
+class InputReadLine {
+    static func getIntegerUserInput() -> Int {
+        
+        if let choice = readLine(), choice.isEmpty == false, let intChoice = Int(choice) {
+            
+            return intChoice
+        } else {
+            print("I don't understand")
+         return getIntegerUserInput()
+        }
+    }
+}
 

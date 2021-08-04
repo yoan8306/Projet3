@@ -106,20 +106,20 @@ extension Game {
         
         // on liste l'équipe créée
         player.listAllCharacters()
-        
-        func characterNameNotExist(newName: String) ->Bool {
-            // on vérifie que le paramètre soit bien renseigné sinon la fonction renvoie la valeur faux avec le message associé.
-            if newName == "" {
-                print("I don't understand your response. \nTry again please.")
-                return false
-                
-                // on vérifie que le nom ne soit pas présent dans une des deux équipes
-            } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) { // on vérifie dans les deux équipes le nom
-                print("This name already exist in a teams. \nTry again please.")
-                return false
-            } else {
-                return true
-            }
+    }
+    
+    func characterNameNotExist(newName: String) ->Bool {
+        // on vérifie que le paramètre soit bien renseigné sinon la fonction renvoie la valeur faux avec le message associé.
+        if newName == "" {
+            print("I don't understand your response. \nTry again please.")
+            return false
+            
+            // on vérifie que le nom ne soit pas présent dans une des deux équipes
+        } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) { // on vérifie dans les deux équipes le nom
+            print("This name already exist in a teams. \nTry again please.")
+            return false
+        } else {
+            return true
         }
     }
 }
@@ -131,6 +131,9 @@ extension Game {
     private func roundByRound() {
         var choice = ""
         var gameContinue = true
+        var attackingPlayer = playerOne
+        var defendingPlayer = playerTwo
+        
         // on initialise le bonus avec un nombre aléatoire de 1 à 5
         var roundForBonus : Int = Int.random(in: 1...5)
         
@@ -155,6 +158,11 @@ extension Game {
                 bonus = nil
             }
             
+            
+            
+//            remplacer avec attackingPlayer et defendingPlayer
+            
+            
             // on vérifie qui doit jouer
             if playerOne.playing == true {
                 print("\(playerOne.name) Attack !")
@@ -172,7 +180,9 @@ extension Game {
                     case "1":
                         
                         // on fait une attack
-                        playerOne.attack(playerDefense: playerTwo, weaponBonus: bonus)
+                         let useBonus = askToUseBonus(weaponBonus: bonus)
+                            
+                        playerOne.attack(playerDefense: playerTwo, weaponBonus: useBonus ? bonus : nil)
                         // après l'attaque on vérifie si la partie doit continuer ou s'arrêter
                         gameContinue = checkGameContinue(playerDefense: playerTwo, playerAttack: playerOne)
                     case "2":
@@ -187,35 +197,14 @@ extension Game {
                 }
                 // une fois l'acton faite on décharge le cadeau et on change le tour du joueur
                 bonus = nil
-                playerOne.playing = false
-                playerTwo.playing = true
                 
-            } else {
-                // même commentaire que précédemment mais pour le joueur 2
-                print("\(playerTwo.name) Attack !")
-                choice = ""
-                while choice == "" {
-                    print("What do you want do: "
-                            + "\n- 1 - Attack"
-                            + "\n- 2 - Healing")
-                    choice = readLine() ?? ""
-                    switch choice {
-                    
-                    case "1":
-                        playerTwo.attack(playerDefense: playerOne, weaponBonus: bonus)
-                        
-                        // on vérifie s'il y a encore des joueurs après l'attaque
-                        gameContinue = checkGameContinue(playerDefense: playerOne, playerAttack: playerTwo)
-                    case "2":
-                        playerTwo.healing()
-                    default:
-                        print("I don't understand your response. \nTry again please")
-                        choice = ""
-                    }
+                if attackingPlayer.name == playerOne.name {
+                    attackingPlayer = playerTwo
+                    defendingPlayer = playerOne
+                } else {
+                    attackingPlayer = playerOne
+                    defendingPlayer = playerTwo
                 }
-                bonus = nil
-                playerOne.playing = true
-                playerTwo.playing = false
             }
         }
     }
@@ -224,10 +213,16 @@ extension Game {
 
 //  bonus
 extension Game {
-    func questionUsePresent() -> Bool {
+    func askToUseBonus(weaponBonus: Weapon?) -> Bool {
+        guard let weaponBonus = weaponBonus else {
+           return false
+        }
         // par défaut on utilise pas le bonus car il n'existe pas toujours
-        var usePresentOrNot = false
+        
         var choice = ""
+        
+        
+        print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage) \nTap 2- you select your hero")
         
         while choice == "" {
             choice = readLine() ?? ""
@@ -237,19 +232,19 @@ extension Game {
                 
                 // on passe la variable à true si on utilise le bonus
                 print("you choose a present")
-                usePresentOrNot = true
+                return true
                 
             case "2":
                 
                 // on passe la variable à false si on utilise pas le bonus
                 print("You choose your hero")
-                usePresentOrNot = false
+                return false
             default:
                 print("I don't understand")
                 choice = ""
             }
         }
-        return usePresentOrNot
+        return false
     }
 }
 
