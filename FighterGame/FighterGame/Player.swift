@@ -99,43 +99,6 @@ class Player {
 extension Player {
     
      func attack(playerDefense: Player, weaponBonus: Weapon?)  {
-<<<<<<< HEAD
-        var heroAttack : Character = team[0]
-        var heroDefense : Character
-        var index = 0
-        // par défaut usePresent et false car si il n'y a pas de bonus on n'exécutera pas le code associé.
-        var useBonus = false
-        
-        // on vérifie notre paramètre s'il y a un bonus
-        if weaponBonus != nil {
-            print("Congratulation! \nTap 1- for use \(weaponBonus!) \nTap 2- you select your hero")
-            // on demande si on utilise le bonus ou non
-            useBonus = Game.questionUsePresent()
-        }
-        
-        //on vérifie si on doit utiliser le bonus ou si on doit sélectionner un attaquant.
-        if useBonus == false {         
-            
-            // on met l'index à 1 pour obtenir le bon numéro pour le choix de l'utilisateur
-            index = 1
-            print("--------- Select your Hero for attack.--------------")
-            for character in team {
-                
-                //on ne liste que les personnages en vie
-                if character.lifePoint > 0 {
-                    print("- \(index) - \(character.name)"
-                            + "\n❤️: \(character.lifePoint)"
-                            + "\n⚔️\(character.weapon)"
-                            + "\n❤️‍🩹: \(character.healing)"
-                            + "\n*********************")
-                    index += 1
-                } else {
-                    index += 1
-                }
-            }
-            // on récupère le choix de l'utilisateur
-            heroAttack = choiceHeroAttack()
-=======
         var heroAttack: Character = team[0]
         var heroDefense: Character
     
@@ -144,7 +107,6 @@ extension Player {
             showTeam(attacking: true)
 //       on récupère le choix de l'utilisateur
             heroAttack = choiceHero()
->>>>>>> review
         }
         
 //       on liste l'équipe qui va recevoir l'attaque
@@ -153,24 +115,16 @@ extension Player {
 //       on récupère le choix de l'utilisateur
         heroDefense = playerDefense.choiceHero()
         
-<<<<<<< HEAD
-        // on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
-        if useBonus == false {
-            heroDefense.lifePoint -=  heroAttack.weapon.damages
-        } else {
-            heroDefense.lifePoint -= weaponBonus!.damages
-=======
 //         on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
         if weaponBonus == nil {
             heroDefense.lifePoint -=  heroAttack.weapon.damage
         } else if let bonusWeapon = weaponBonus {
             heroDefense.lifePoint -= bonusWeapon.damage
->>>>>>> review
         }
         
 //         on informe du succès de l'attaque
         print("\(heroDefense.name): ❤️\(heroDefense.lifePoint) - ")
-    }
+}
     
     private func transformChoice(choice: String) -> Int {
         if let intChoice = Int(choice), [1,2,3].contains(intChoice) {

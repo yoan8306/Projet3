@@ -59,19 +59,12 @@ class Game {
         //combat tour par tour jusqu'a la sortie de la fonction
         roundByRound()
         
-<<<<<<< HEAD
+
         // les caractéristiques du jeux
         presentStatistic()
     }
     
     private func presentStatistic() {
-=======
-        // les caractéristiques du jeux que l'on informe
-        statistic()
-    }
-    
-    private func statistic() {
->>>>>>> review
         print("\nYou have played \(numberRound) round"
                 + "\nYou have \(numberBonus) bonus"
                 + "\n############ \(playerOne.name) your team was: ")
@@ -157,7 +150,7 @@ extension Game {
             if numberRound == roundForBonus {
                 
                 //on informe l'utilisateur qu'il a obtenu u bonus et on initialise le cadeau "present" avec une arme aléatoire
-                print("You have bonus")
+               print("You have bonus")
                 bonus = Bonus().createBonus()
                 numberBonus += 1
                 // ajoute un nombre aléatoire pour le prochain bonus
@@ -220,20 +213,13 @@ extension Game {
 
 //  bonus
 extension Game {
-<<<<<<< HEAD
-  static func questionUsePresent() -> Bool {
-        // par défaut on utilise pas le bonus car il n'existe pas toujours
-        var useBonusOrNot = false
-=======
     func askToUseBonus(weaponBonus: Weapon?) -> Bool {
         guard let weaponBonus = weaponBonus else {
            return false
         }
         // par défaut on utilise pas le bonus car il n'existe pas toujours
         
->>>>>>> review
         var choice = ""
-        
         
         print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
         
@@ -245,31 +231,19 @@ extension Game {
                 
                 // on passe la variable à true si on utilise le bonus
                 print("you choose a present")
-<<<<<<< HEAD
-                useBonusOrNot = true
-=======
-                return true
->>>>>>> review
                 
             case "2":
                 
                 // on passe la variable à false si on utilise pas le bonus
                 print("You choose your hero")
-<<<<<<< HEAD
-                useBonusOrNot = false
-=======
                 return false
->>>>>>> review
             default:
                 print("I don't understand")
                 choice = ""
             }
         }
-<<<<<<< HEAD
-        return useBonusOrNot
-=======
         return false
->>>>>>> review
+
     }
 }
 

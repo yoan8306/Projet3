@@ -26,14 +26,12 @@ class Character {
     }
 
     func introduceCharacter(index: Int) {
-            
                var characteristic = "- \(index + 1) - \(name)"
                         + "\n❤️: \(lifePoint)"
                         + "\n⚔️: \(weapon.name)(\(weapon.damage))"
             if healing > 0 {
              characteristic +=  "\n❤️‍🩹: \(healing)"
             }
-            
             characteristic += "\n**********************"
             
             print(characteristic)
