@@ -142,7 +142,7 @@ extension Game {
         
         // on vérifie que gameContinue ne soit pas faux
         while gameContinue {
-            
+        
             // on ajoute un aux nombre de tour
             numberRound += 1
             
@@ -150,9 +150,9 @@ extension Game {
             if numberRound == roundForBonus {
                 
                 //on informe l'utilisateur qu'il a obtenu u bonus et on initialise le cadeau "present" avec une arme aléatoire
-               print("You have bonus")
-                bonus = Bonus().createBonus()
+                bonus = Bonus.createBonus()
                 numberBonus += 1
+                
                 // ajoute un nombre aléatoire pour le prochain bonus
                 roundForBonus += Int.random(in: 1...5)
             } else {
@@ -160,11 +160,6 @@ extension Game {
                 // sinon le cadeau vaut nil
                 bonus = nil
             }
-            
-//            remplacer avec attackingPlayer et defendingPlayer
-            
-            
-            // on vérifie qui doit jouer
            
                 print("\(attackingPlayer.name) Attack !")
                 choice = ""
@@ -196,8 +191,6 @@ extension Game {
                         choice = ""
                     }
                 }
-                // une fois l'acton faite on décharge le cadeau et on change le tour du joueur
-                bonus = nil
                 
                 if attackingPlayer.name == playerOne.name {
                     attackingPlayer = playerTwo
@@ -214,36 +207,33 @@ extension Game {
 //  bonus
 extension Game {
     func askToUseBonus(weaponBonus: Weapon?) -> Bool {
+        
+//        on vérifie si weaponsBonus contient quelque chose
         guard let weaponBonus = weaponBonus else {
            return false
         }
-        // par défaut on utilise pas le bonus car il n'existe pas toujours
-        
-        var choice = ""
-        
+
         print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
+        var choice = InputReadLine.getIntegerUserInput()
         
-        while choice == "" {
-            choice = readLine() ?? ""
-            
+        while [1,2].contains(choice)  == false {
             switch choice {
-            case "1":
+            case 1:
                 
                 // on passe la variable à true si on utilise le bonus
                 print("you choose a present")
-                
-            case "2":
+                return true
+            case 2:
                 
                 // on passe la variable à false si on utilise pas le bonus
                 print("You choose your hero")
                 return false
             default:
-                print("I don't understand")
-                choice = ""
+            choice = InputReadLine.getIntegerUserInput()
             }
         }
         return false
-
+     
     }
 }
 
@@ -259,21 +249,5 @@ extension Game {
         } else {
             return true
         }
-    }
-    
-    func CheckResponse(userChoice: String) -> Int {
-        var choice = ""
-        var response = 1
-        while choice == "" {
-            choice = readLine() ?? ""
-            if let intChoice = Int(choice), [1,2,3].contains(intChoice) {
-                response = intChoice
-            } else {
-                print("I don't understand your response"
-                        + "\nTry again please")
-                choice = ""
-            }
-        }
-        return response
     }
 }

@@ -126,14 +126,6 @@ extension Player {
         print("\(heroDefense.name): ❤️\(heroDefense.lifePoint) - ")
 }
     
-    private func transformChoice(choice: String) -> Int {
-        if let intChoice = Int(choice), [1,2,3].contains(intChoice) {
-            return intChoice - 1
-        }else {
-            return 0
-        }
-    }
-    
     private func choiceHero()-> Character {
         var choice = ""
         var hero = team[0]
@@ -167,20 +159,20 @@ extension Player {
         var doctor = team[0]
         var heroWounded = team[0]
         
-        //on liste les personnages en vie et ceux qui ont une valeur de soin supérieur à 0
+//        on liste les personnages en vie et ceux qui ont une valeur de soin supérieur à 0
         showTeam(healing: true)
 
-        //on récupère le choix de l'utilisateur
+//        on récupère le choix de l'utilisateur
         doctor = chooseDoctor()
         
 //        on liste les personnages que l'on veut soigner
         showTeam(healing: false)
         
-        // on récupère le choix de l'utilisateur et on ajoute les points de vie
+//         on récupère le choix de l'utilisateur et on ajoute les points de vie
         heroWounded = chooseHeroWounded()
         heroWounded.lifePoint += doctor.healing
         
-        // on informe du succès du soins.
+//         on informe du succès du soins.
         print("\(heroWounded.name) was treated: \n❤️ \(heroWounded.lifePoint)")
     }
     
