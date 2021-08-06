@@ -23,32 +23,33 @@ class Game {
     }
     
     
-    func launchGame() {
-        var choice = ""
+  static func launchGame() {
+        
+    
+    print("Tap 1 for start new game"
+        + "\nTap 2 for exit")
+    
         // on boucle à l'infinie pour recommencer une nouvelle partie
-        while choice == "" {
-            print("Tap 1 for start new game"
-                + "\nTap 2 for exit")
-            choice = readLine() ?? ""
+//        while choice == "" {
+//            choice = readLine() ?? ""
+    var choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
             switch choice {
-            case "1":
+            case 1:
                 
                 // on sélectionne 1 pour commencer une nouvelle partie et on remet gameContinue sur true pour une nouvelle partie
                 print("Start new game")
-                startNewGame()
+                Game().startNewGame()
+                Game.launchGame()
                 
-                // choice = "" afin de relancer une nouvelle partie
-                choice = ""
-            case "2":
+            case 2:
                 
                 //pour sortir du while et quitter l'application
                 break
                 
             default:
-                print("I don't understand your choice")
-                choice = ""
+                choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
             }
-        }
+//        }
     }
     
     private func startNewGame() {
@@ -118,7 +119,7 @@ extension Game {
             return false
             
             // on vérifie que le nom ne soit pas présent dans une des deux équipes
-        } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) { // on vérifie dans les deux équipes le nom
+        } else if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) {
             print("This name already exist in a teams. \nTry again please.")
             return false
         } else {
@@ -162,13 +163,14 @@ extension Game {
             }
            
                 print("\(attackingPlayer.name) Attack !")
+            print("What do you want do: "
+                    + "\n- 1 - Attack"
+                    + "\n- 2 - Healing")
                 choice = ""
                 while choice == "" {
                     
                     // on demande ce que l'utilisateur veut effectuer
-                    print("What do you want do: "
-                            + "\n- 1 - Attack"
-                            + "\n- 2 - Healing")
+                    
                     choice = readLine() ?? ""
                     
                     switch choice {
@@ -192,21 +194,27 @@ extension Game {
                     }
                 }
                 
-                if attackingPlayer.name == playerOne.name {
-                    attackingPlayer = playerTwo
-                    defendingPlayer = playerOne
-                } else {
-                    attackingPlayer = playerOne
-                    defendingPlayer = playerTwo
-                }
+            attackingPlayer = changePlayer(player: attackingPlayer)
+            defendingPlayer = changePlayer(player: defendingPlayer)
+                
         }
     }
+    
+    private func changePlayer(player: Player) -> Player {
+        if player.name == playerOne.name {
+            return playerTwo
+        } else {
+            return playerOne
+        }
+    }
+    
 }
 
 
 //  bonus
 extension Game {
     func askToUseBonus(weaponBonus: Weapon?) -> Bool {
+        var choice = ""
         
 //        on vérifie si weaponsBonus contient quelque chose
         guard let weaponBonus = weaponBonus else {
@@ -214,22 +222,23 @@ extension Game {
         }
 
         print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
-        var choice = InputReadLine.getIntegerUserInput()
         
-        while [1,2].contains(choice)  == false {
+        
+        while choice == "" {
+            choice = readLine() ?? ""
             switch choice {
-            case 1:
+            case "1":
                 
                 // on passe la variable à true si on utilise le bonus
                 print("you choose a present")
                 return true
-            case 2:
+            case "2" :
                 
                 // on passe la variable à false si on utilise pas le bonus
                 print("You choose your hero")
                 return false
             default:
-            choice = InputReadLine.getIntegerUserInput()
+            choice = ""
             }
         }
         return false

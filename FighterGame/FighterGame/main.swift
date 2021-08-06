@@ -7,10 +7,7 @@
 
 import Foundation
 
-var newGame: Game = Game()
-
-newGame.launchGame()
-
+Game.launchGame()
 
 
 
