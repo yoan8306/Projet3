@@ -73,6 +73,9 @@ class Player {
         }
     }
     
+    /// <#Description#>
+    /// - Parameter index: <#index description#>
+    /// - Returns: <#description#>
     private func characterIsAlive(index: Int) ->Bool {
         if team[index].lifePoint > 0 {
             return true
@@ -82,7 +85,8 @@ class Player {
         }
     }
     
-    func characterStillAlive() -> Int {
+    //dès que j'en est 1 retourne vrai
+    func characterStillAlive() -> Bool {
         var numberCharacter = 0
       
             for character in self.team {
@@ -98,6 +102,11 @@ class Player {
 // Attack
 extension Player {
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - playerDefense: <#playerDefense description#>
+    ///   - weaponBonus: <#weaponBonus description#>
      func attack(playerDefense: Player, weaponBonus: Weapon?)  {
         var heroAttack: Character = team[0]
         var heroDefense: Character

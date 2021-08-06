@@ -19,4 +19,8 @@ class InputReadLine {
          return getIntegerUserInput(switchCase: switchCase)
         }
     }
+    
+    static func getStringUserInput() -> String {
+        return ""
+    }
 }

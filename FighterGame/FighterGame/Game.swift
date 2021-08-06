@@ -23,34 +23,34 @@ class Game {
     }
     
     
-  static func launchGame() {
-        
-    
-    print("Tap 1 for start new game"
-        + "\nTap 2 for exit")
-    
-        // on boucle à l'infinie pour recommencer une nouvelle partie
-//        while choice == "" {
-//            choice = readLine() ?? ""
-    var choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
-            switch choice {
-            case 1:
-                
-                // on sélectionne 1 pour commencer une nouvelle partie et on remet gameContinue sur true pour une nouvelle partie
-                print("Start new game")
-                Game().startNewGame()
-                Game.launchGame()
-                
-            case 2:
-                
-                //pour sortir du while et quitter l'application
-                break
-                
-            default:
-                choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
-            }
-//        }
-    }
+//  static func launchGame() {
+//
+//
+//    print("Tap 1 for start new game"
+//            + "\nTap 2 for exit")
+//
+//    // on boucle à l'infinie pour recommencer une nouvelle partie
+//    //        while choice == "" {
+//    //            choice = readLine() ?? ""
+//    var choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
+//    switch choice {
+//    case 1:
+//
+//        // on sélectionne 1 pour commencer une nouvelle partie et on remet gameContinue sur true pour une nouvelle partie
+//        print("Start new game")
+//        Game().startNewGame()
+//        Game.launchGame()
+//
+//    case 2:
+//
+//        //pour sortir du while et quitter l'application
+//        break
+//
+//    default:
+//        choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
+//    }
+//    //        }
+//    }
     
     private func startNewGame() {
         // on créée les équipes des joueurs 1 et 2
@@ -59,7 +59,6 @@ class Game {
     
         //combat tour par tour jusqu'a la sortie de la fonction
         roundByRound()
-        
 
         // les caractéristiques du jeux
         presentStatistic()
@@ -133,70 +132,41 @@ extension Game {
 extension Game {
     
     private func roundByRound() {
-        var choice = ""
         var gameContinue = true
         var attackingPlayer = playerOne
         var defendingPlayer = playerTwo
         
-        // on initialise le bonus avec un nombre aléatoire de 1 à 5
-        var roundForBonus : Int = Int.random(in: 1...5)
-        
         // on vérifie que gameContinue ne soit pas faux
-        while gameContinue {
-        
-            // on ajoute un aux nombre de tour
-            numberRound += 1
-            
-            // on vérifie que le nombre de tour correspond au nombre bonus
-            if numberRound == roundForBonus {
-                
-                //on informe l'utilisateur qu'il a obtenu u bonus et on initialise le cadeau "present" avec une arme aléatoire
-                bonus = Bonus.createBonus()
-                numberBonus += 1
-                
-                // ajoute un nombre aléatoire pour le prochain bonus
-                roundForBonus += Int.random(in: 1...5)
-            } else {
-                
-                // sinon le cadeau vaut nil
-                bonus = nil
-            }
-           
-                print("\(attackingPlayer.name) Attack !")
-            print("What do you want do: "
-                    + "\n- 1 - Attack"
-                    + "\n- 2 - Healing")
-                choice = ""
-                while choice == "" {
-                    
-                    // on demande ce que l'utilisateur veut effectuer
-                    
-                    choice = readLine() ?? ""
-                    
-                    switch choice {
-                    
-                    case "1":
-                        
-                        // on fait une attack
-                         let useBonus = askToUseBonus(weaponBonus: bonus)
-                            
-                        attackingPlayer.attack(playerDefense: defendingPlayer, weaponBonus: useBonus ? bonus : nil)
-                        // après l'attaque on vérifie si la partie doit continuer ou s'arrêter
-                        gameContinue = checkGameContinue(playerDefense: defendingPlayer, playerAttack: attackingPlayer)
-                    case "2":
-                        
-                        // on soigne
-                        attackingPlayer.healing()
-                        
-                    default:
-                        print("I don't understand your response. \nTry again please")
-                        choice = ""
-                    }
-                }
-                
+        while attackingPlayer.characterStillAlive() {
+            attackOrHealing(for: attackingPlayer, defendingPlayer: defendingPlayer)
+            // on vérifie si la partie doit continuer ou s'arrêter
+           // gameContinue = checkGameContinue(playerDefense: defendingPlayer, playerAttack: attackingPlayer)
             attackingPlayer = changePlayer(player: attackingPlayer)
             defendingPlayer = changePlayer(player: defendingPlayer)
-                
+        }
+        
+        print("\(defendingPlayer.name) win")
+
+    }
+
+    func attackOrHealing(for attackingPlayer: Player, defendingPlayer: Player) {
+        print("\(attackingPlayer.name) it's your turn !")
+        print("What do you want do: "
+                + "\n- 1 - Attack"
+                + "\n- 2 - Healing")
+        
+        let choice = InputReadLine.getIntegerUserInput(switchCase: [1, 2])
+        switch choice {
+        case 1:
+            let randomBonus = Bonus.createRandomBonus()
+            attackingPlayer.attack(playerDefense: defendingPlayer, weaponBonus: randomBonus)
+        case 2:
+            print("heal")
+            attackingPlayer.healing()
+
+        default:
+            print("I don't understand your response. \nTry again please")
+            attackOrHealing(for: attackingPlayer, defendingPlayer: defendingPlayer)
         }
     }
     
@@ -213,50 +183,50 @@ extension Game {
 
 //  bonus
 extension Game {
-    func askToUseBonus(weaponBonus: Weapon?) -> Bool {
-        var choice = ""
-        
-//        on vérifie si weaponsBonus contient quelque chose
-        guard let weaponBonus = weaponBonus else {
-           return false
-        }
-
-        print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
-        
-        
-        while choice == "" {
-            choice = readLine() ?? ""
-            switch choice {
-            case "1":
-                
-                // on passe la variable à true si on utilise le bonus
-                print("you choose a present")
-                return true
-            case "2" :
-                
-                // on passe la variable à false si on utilise pas le bonus
-                print("You choose your hero")
-                return false
-            default:
-            choice = ""
-            }
-        }
-        return false
-     
-    }
+//    func askToUseBonus(weaponBonus: Weapon?) -> Bool {
+//        var choice = ""
+//
+////        on vérifie si weaponsBonus contient quelque chose
+//        guard let weaponBonus = weaponBonus else {
+//           return false
+//        }
+//
+//        print("Congratulation! \nTap 1- for use \(weaponBonus.name)(\(weaponBonus.damage)) \nTap 2- you select your hero")
+//
+//
+//        while choice == "" {
+//            choice = readLine() ?? ""
+//            switch choice {
+//            case "1":
+//
+//                // on passe la variable à true si on utilise le bonus
+//                print("you choose a present")
+//                return true
+//            case "2" :
+//
+//                // on passe la variable à false si on utilise pas le bonus
+//                print("You choose your hero")
+//                return false
+//            default:
+//            choice = ""
+//            }
+//        }
+//        return false
+//
+//    }
 }
 
 extension Game {
-    func checkGameContinue(playerDefense: Player, playerAttack: Player) -> Bool {
-        
-        // si on 0 alors tout les personnages sont morts et la partie s'arrête grâce à la variable gameContinue false
-        if playerDefense.characterStillAlive() == 0 {
-            
-            // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
-            print("\(playerAttack.name) win")
-            return false
-        } else {
-            return true
-        }
-    }
+//    func checkGameContinue(playerDefense: Player, playerAttack: Player) -> Bool {
+//
+//        // si on 0 alors tout les personnages sont morts et la partie s'arrête grâce à la variable gameContinue false
+//        if playerDefense.characterStillAlive() == 0 {
+//
+//            // on signal que la partie doit s'arrêter et on nomme le joueur gagnant
+//            print("\(playerAttack.name) win")
+//            return false
+//        } else {
+//            return true
+//        }
+//    }
 }

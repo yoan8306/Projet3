@@ -12,7 +12,7 @@ class Weapon {
     var name: String
     
     static var allWeapons: [Weapon] {
-        [Knife(damage: 0, name: "Knife"),
+        [Knife(),
          Gun(damage: 0, name: "Gun"),
          Rocket(damage: 0, name: "Rocket"),
          Boomerang(damage: 0, name: "Boomerang"),
@@ -28,7 +28,7 @@ class Weapon {
 }
 
 class Knife: Weapon {
-    override init(damage: Int, name: String) {
+    init() {
         super.init(damage: Int.random(in: 1...5), name: "Knife")
     }
 }
