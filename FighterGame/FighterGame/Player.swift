@@ -87,15 +87,12 @@ class Player {
     
     //dès que j'en est 1 retourne vrai
     func characterStillAlive() -> Bool {
-        var numberCharacter = 0
-      
-            for character in self.team {
-                if character.lifePoint > 0 {
-                    // on compte le nombre de personnage encore en vie
-                    numberCharacter += 1
-                }
+        for character in self.team {
+            if character.lifePoint > 0 {
+                return true
             }
-        return numberCharacter
+        }
+        return false
     }
 }
 
