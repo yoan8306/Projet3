@@ -8,6 +8,9 @@
 import Foundation
 
 class InputReadLine {
+    
+    /// manage input of player and convert string to integer
+    /// - Returns: return choice player if is it an integer
     static func getIntegerUserInput() -> Int {
         if let choice = readLine(), choice.isEmpty == false, let intChoice = Int(choice) {
             return intChoice
@@ -17,6 +20,8 @@ class InputReadLine {
         }
     }
     
+    /// manage input of player and check if they are an input
+    /// - Returns: returns string if player press one touch
     static func getStringUserInput() -> String {
         if let response = readLine(), response.isEmpty == false, response != ""{
             return response

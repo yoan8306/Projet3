@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Main {
+class Main {
+    /// player select if want launch game or exit the program
     static func launchGame() {
         print("Tap 1 for start new game of FighterGame"
                 + "\nTap 2 for exit")

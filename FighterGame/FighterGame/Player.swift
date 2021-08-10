@@ -160,6 +160,7 @@ extension Player {
 // Healing
 extension Player {
     
+    /// player see team, he select a doctor and select wounded
     func healing() {
         var doctor = team[0]
         var heroWounded = team[0]
@@ -176,6 +177,8 @@ extension Player {
         print("\(heroWounded.name) was treated: \n❤️ \(heroWounded.lifePoint)")
     }
     
+    /// get choice player. this fonction check if character choice is alive and healing is > 0
+    /// - Returns: if ok return character choice
     private func chooseDoctor() -> Character {
         var choice = ""
         var doctor = team[0]
@@ -197,6 +200,8 @@ extension Player {
         return doctor
     }
     
+    /// get choice player. this fonction check if character choice is alive
+    /// - Returns: if ok return character choice
     private func chooseHeroWounded() -> Character {
         var heroWounded = team[0]
         var choice = ""

@@ -13,7 +13,6 @@ class Character {
     var weapon: Weapon
     var healing = 0
    
-    // on créée un personnages avec une arme aux hasard et une valeur de soins aléatoire
     init (newName: String) {
         let max = Weapon.allWeapons.count - 1
         name = newName
@@ -21,6 +20,8 @@ class Character {
         healing = Int.random(in: 0...8)
     }
     
+    /// print characteristic of character
+    /// - Parameter index: it's number position in the team
     func introduceCharacter(index: Int) {
         var characteristic = "- \(index + 1) - \(name)"
             + "\n❤️: \(lifePoint)"
