@@ -15,11 +15,7 @@ class Character {
    
     // on créée un personnages avec une arme aux hasard et une valeur de soins aléatoire
     init (newName: String) {
-        
-        // on récupère la valeur max du catalogues d'armes
         let max = Weapon.allWeapons.count - 1
-        
-        // on attribut les caractéristiques du personnage
         name = newName
         weapon = Weapon.allWeapons[Int.random(in: 0...max)]
         healing = Int.random(in: 0...8)

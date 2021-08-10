@@ -8,7 +8,6 @@
 import Foundation
 
 struct Bonus {
-    
     static func createRandomBonus() -> Weapon? {
         let randomValue = Int.random(in: 0...5)
         

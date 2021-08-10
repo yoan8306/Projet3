@@ -12,46 +12,44 @@ class Player {
     var team: [Character] = []
     var playing = true
     
-    // on initialise le nom du joueur
     init(name: String) {
         self.name = name
     }
     
-    
-    // on vérifie que le nom du personnage ne soit pas déjà entré et on renvoie un booléen
+    /// Check if name exist in the team
+    /// - Parameter name: it's name of comparaison
+    /// - Returns: true if name exist and false if name doesn't exist
     func checkNameAlreadyExist(newName name: String) -> Bool {
-        // On parcours le tableau de l'équipe
         for nameAlreadyExist in team {
             if nameAlreadyExist.name == name {
-                // si correspondance trouvé on renvoie true et on sort de la fonction
                 return true
             }
         }
-        // sinon on renvoie false
         return false
     }
     
-    // on imprime le personnage voulu avec les caractéristiques
-    
-    
+    /// list all characters with statistics in a team
     func listAllCharacters() {
         for indexOfCharacter in (0...team.count - 1) {
             team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
         }
     }
     
+    /// list character still alive
+    /// - Parameter attacking: if attacking is true show print for introduce attack, and if false show introduce receive attack
     func showTeam(attacking: Bool) {
         let introduction = attacking ? "Select your Hero for attack." : "Select hero receiving attack."
         print("--------- \(introduction) --------------")
         
         for indexOfCharacter in (0...team.count - 1) {
-            //on ne liste que les personnages en vie
             if characterIsAlive(index: indexOfCharacter) {
                 team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
             }
         }
     }
     
+    /// list character still alive and can healing
+    /// - Parameter healing: select if show just still alive or can healing
     func showTeam(healing: Bool) {
         let introduction = healing ? "Select your doctor": "Select your hero to be treating"
         print("--------- \(introduction) ---------")
@@ -73,19 +71,20 @@ class Player {
         }
     }
     
-    /// <#Description#>
-    /// - Parameter index: <#index description#>
-    /// - Returns: <#description#>
+    /// return true if character is alive
+    /// - Parameter index: inform what character is
+    /// - Returns: return true if character is alive and false if character is died
     private func characterIsAlive(index: Int) ->Bool {
         if team[index].lifePoint > 0 {
             return true
         } else {
-            print("\(team[index].name) is died. Select another hero")
+            print("\(team[index].name) is died")
             return false
         }
     }
     
-    //dès que j'en est 1 retourne vrai
+    /// check if they one character again alive
+    /// - Returns: if one character is alive return true else return false. all character in team are died
     func characterStillAlive() -> Bool {
         for character in self.team {
             if character.lifePoint > 0 {
@@ -100,51 +99,51 @@ class Player {
 extension Player {
     
     
-    /// <#Description#>
+    /// Choose his hero attack and choose hero receive attack and impose damage
     /// - Parameters:
-    ///   - playerDefense: <#playerDefense description#>
-    ///   - weaponBonus: <#weaponBonus description#>
-     func attack(playerDefense: Player, weaponBonus: Weapon?)  {
+    ///   - playerDefense: hero reeive attack
+    ///   - weaponBonus: if player choose bonus weaponbonus impose damage if not player choose his hero
+    func attack(playerDefense: Player, weaponBonus: Weapon?)  {
         var heroAttack: Character = team[0]
         var heroDefense: Character
-    
-//        on vérifie si on doit utiliser le bonus ou si on doit sélectionner un attaquant.
+        
         if weaponBonus == nil {
             showTeam(attacking: true)
-//       on récupère le choix de l'utilisateur
             heroAttack = choiceHero()
         }
         
-//       on liste l'équipe qui va recevoir l'attaque
         playerDefense.showTeam(attacking: false)
         
-//       on récupère le choix de l'utilisateur
         heroDefense = playerDefense.choiceHero()
         
-//         on vérifie si nous devons utiliser le bonus pour infliger les dégâts sur la personne attaquée
         if weaponBonus == nil {
             heroDefense.lifePoint -=  heroAttack.weapon.damage
         } else if let bonusWeapon = weaponBonus {
             heroDefense.lifePoint -= bonusWeapon.damage
         }
+        if heroDefense.lifePoint < 0 {
+            heroDefense.lifePoint = 0
+        }
         
-//         on informe du succès de l'attaque
         print("\(heroDefense.name): ❤️\(heroDefense.lifePoint) - ")
-}
+    }
     
+    ///  selection hero and check selection is good
+    /// - Returns: hero choice by player
     private func choiceHero()-> Character {
         var choice = ""
         var hero = team[0]
         
-        while choice == "" || Int(choice) == 0 {
+        while choice == "" {
             choice = readLine() ?? ""
             
             if var intChoice = Int(choice), [1,2,3].contains(intChoice) {
                 intChoice -= 1
-//            on vérifie que le choix sélectionné correspond à un joueur encore en vie
+
                 if characterIsAlive(index: intChoice) {
                     hero = team[intChoice]
                 } else {
+                    print("Select another hero Please")
                     choice = ""
                 }
                 
@@ -165,20 +164,15 @@ extension Player {
         var doctor = team[0]
         var heroWounded = team[0]
         
-//        on liste les personnages en vie et ceux qui ont une valeur de soin supérieur à 0
         showTeam(healing: true)
 
-//        on récupère le choix de l'utilisateur
         doctor = chooseDoctor()
         
-//        on liste les personnages que l'on veut soigner
         showTeam(healing: false)
         
-//         on récupère le choix de l'utilisateur et on ajoute les points de vie
         heroWounded = chooseHeroWounded()
         heroWounded.lifePoint += doctor.healing
         
-//         on informe du succès du soins.
         print("\(heroWounded.name) was treated: \n❤️ \(heroWounded.lifePoint)")
     }
     
@@ -191,7 +185,7 @@ extension Player {
             
             if var intChoice =  Int(choice), [1,2,3].contains(intChoice) {
                 intChoice -= 1
-//           on vérifie que la personne choisie soit en vie et possède une valeur de soins suffisante                pour soigner
+
                 if team[intChoice].healing > 0 && characterIsAlive(index: intChoice) {
                     doctor = team[intChoice]
                 } else {
@@ -211,14 +205,15 @@ extension Player {
             choice = readLine() ?? ""
             
             if var intChoice = Int(choice), [1,2,3].contains(intChoice) {
-//                on vérifie que la personne choisie soit encore en vie.
                 intChoice -= 1
+
                 if characterIsAlive(index: intChoice) {
                     heroWounded = team[intChoice]
                 } else {
-                    
+                    print("Select another hero please")
                     choice = ""
                 }
+                
             } else {
                 print("I donc't understand")
                 choice = ""
