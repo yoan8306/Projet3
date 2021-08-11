@@ -10,7 +10,6 @@ import Foundation
 class Player {
     var name: String
     var team: [Character] = []
-    var playing = true
     
     init(name: String) {
         self.name = name
@@ -20,10 +19,8 @@ class Player {
     /// - Parameter name: it's name of comparaison
     /// - Returns: true if name exist and false if name doesn't exist
     func checkNameAlreadyExist(newName name: String) -> Bool {
-        for nameAlreadyExist in team {
-            if nameAlreadyExist.name == name {
-                return true
-            }
+        for character in team where character.name == name {
+            return true
         }
         return false
     }
@@ -31,20 +28,18 @@ class Player {
     /// list all characters with statistics in a team
     func listAllCharacters() {
         for indexOfCharacter in (0...team.count - 1) {
-            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
+            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter, filterAgainAlive: false)
         }
     }
     
     /// list character still alive
     /// - Parameter attacking: if attacking is true show print for introduce attack, and if false show introduce receive attack
     func showTeam(attacking: Bool) {
-        let introduction = attacking ? "Select your Hero for attack." : "Select hero receiving attack."
+        let introduction = attacking ? "Select your character for attack." : "Select character receiving attack."
         print("--------- \(introduction) --------------")
         
         for indexOfCharacter in (0...team.count - 1) {
-            if characterIsAlive(index: indexOfCharacter) {
-                team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
-            }
+            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter, filterAgainAlive: true)
         }
     }
     
@@ -56,7 +51,7 @@ class Player {
         
         if healing {
             for indexOfCharacter in (0...team.count - 1) {
-                if team[indexOfCharacter].healing > 0 && characterIsAlive(index: indexOfCharacter) {
+                if team[indexOfCharacter].healing > 0 && team[indexOfCharacter].lifePoint > 0 {
                     print("\(indexOfCharacter + 1) - \(team[indexOfCharacter].name)"
                             + "\n❤️‍🩹\(team[indexOfCharacter].healing)")
                 }
@@ -64,26 +59,12 @@ class Player {
         } else {
             
             for indexOfCharacter in (0...team.count - 1) {
-                if characterIsAlive(index: indexOfCharacter){
-                    team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
-                }
+                team[indexOfCharacter].introduceCharacter(index: indexOfCharacter, filterAgainAlive: true)
             }
         }
     }
     
-    /// return true if character is alive
-    /// - Parameter index: inform what character is
-    /// - Returns: return true if character is alive and false if character is died
-    private func characterIsAlive(index: Int) ->Bool {
-        if team[index].lifePoint > 0 {
-            return true
-        } else {
-            print("\(team[index].name) is died")
-            return false
-        }
-    }
-    
-    /// check if they one character again alive
+    /// check if one of characters again alive
     /// - Returns: if one character is alive return true else return false. all character in team are died
     func characterStillAlive() -> Bool {
         for character in self.team {
@@ -99,22 +80,22 @@ class Player {
 extension Player {
     
     
-    /// Choose his hero attack and choose hero receive attack and impose damage
+    /// Choose his character attack and choose character receive attack and impose damage
     /// - Parameters:
-    ///   - playerDefense: hero reeive attack
-    ///   - weaponBonus: if player choose bonus weaponbonus impose damage if not player choose his hero
+    ///   - playerDefense: hero receive attack
+    ///   - weaponBonus: if player choose bonus weaponBonus impose damage if not player choose his hero
     func attack(playerDefense: Player, weaponBonus: Weapon?)  {
         var heroAttack: Character = team[0]
         var heroDefense: Character
         
         if weaponBonus == nil {
             showTeam(attacking: true)
-            heroAttack = choiceHero()
+            heroAttack = choiceCharacter()
         }
         
         playerDefense.showTeam(attacking: false)
         
-        heroDefense = playerDefense.choiceHero()
+        heroDefense = playerDefense.choiceCharacter()
         
         if weaponBonus == nil {
             heroDefense.lifePoint -=  heroAttack.weapon.damage
@@ -130,30 +111,26 @@ extension Player {
     
     ///  selection hero and check selection is good
     /// - Returns: hero choice by player
-    private func choiceHero()-> Character {
-        var choice = ""
-        var hero = team[0]
-        
-        while choice == "" {
-            choice = readLine() ?? ""
+    private func choiceCharacter()-> Character {
+        var character = team[0]
+        var choice = InputReadLine.getIntegerUserInput()
             
-            if var intChoice = Int(choice), [1,2,3].contains(intChoice) {
-                intChoice -= 1
-
-                if characterIsAlive(index: intChoice) {
-                    hero = team[intChoice]
+            if [1,2,3].contains(choice) {
+                choice -= 1
+                
+                if team[choice].lifePoint > 0 {
+                    character = team[choice]
                 } else {
-                    print("Select another hero Please")
-                    choice = ""
+                    print("\(team[choice].name) is died. \nSelect another hero please.")
+                    return choiceCharacter()
                 }
                 
             } else {
                 print("I don't understand your response"
                         + "\nTry again please")
-                choice = ""
+                return choiceCharacter()
             }
-        }
-        return hero
+        return character
     }
 }
 
@@ -163,7 +140,7 @@ extension Player {
     /// player see team, he select a doctor and select wounded
     func healing() {
         var doctor = team[0]
-        var heroWounded = team[0]
+        var characterWounded = team[0]
         
         showTeam(healing: true)
 
@@ -171,59 +148,51 @@ extension Player {
         
         showTeam(healing: false)
         
-        heroWounded = chooseHeroWounded()
-        heroWounded.lifePoint += doctor.healing
+        characterWounded = chooseCharacterWounded()
+        characterWounded.lifePoint += doctor.healing
         
-        print("\(heroWounded.name) was treated: \n❤️ \(heroWounded.lifePoint)")
+        print("\(characterWounded.name) was treated: \n❤️ \(characterWounded.lifePoint)")
     }
     
     /// get choice player. this fonction check if character choice is alive and healing is > 0
     /// - Returns: if ok return character choice
     private func chooseDoctor() -> Character {
-        var choice = ""
         var doctor = team[0]
-        
-        while choice == "" {
-            choice = readLine() ?? ""
-            
-            if var intChoice =  Int(choice), [1,2,3].contains(intChoice) {
-                intChoice -= 1
+        var choice = InputReadLine.getIntegerUserInput()
 
-                if team[intChoice].healing > 0 && characterIsAlive(index: intChoice) {
-                    doctor = team[intChoice]
+            if [1,2,3].contains(choice) {
+                choice -= 1
+
+                if team[choice].healing > 0 && team[choice].lifePoint > 0 {
+                    doctor = team[choice]
                 } else {
-                    print("\(team[intChoice].name) can't healing")
-                    choice = ""
+                    print("\(team[choice].name) can't healing")
+                    return chooseDoctor()
                 }
             }
-        }
         return doctor
     }
     
     /// get choice player. this fonction check if character choice is alive
     /// - Returns: if ok return character choice
-    private func chooseHeroWounded() -> Character {
-        var heroWounded = team[0]
-        var choice = ""
-        
-        while choice == "" {
-            choice = readLine() ?? ""
+    private func chooseCharacterWounded() -> Character {
+        var characterWounded = team[0]
+        var choice = InputReadLine.getIntegerUserInput()
             
-            if var intChoice = Int(choice), [1,2,3].contains(intChoice) {
-                intChoice -= 1
+            if [1,2,3].contains(choice) {
+                choice -= 1
 
-                if characterIsAlive(index: intChoice) {
-                    heroWounded = team[intChoice]
+                if team[choice].lifePoint > 0 {
+                    characterWounded = team[choice]
                 } else {
                     print("Select another hero please")
-                    choice = ""
+                    return chooseCharacterWounded()
                 }
                 
             } else {
                 print("I donc't understand")
-                choice = ""
+                return chooseCharacterWounded()
             }
-        }
-        return heroWounded
+        return characterWounded
     }
 }

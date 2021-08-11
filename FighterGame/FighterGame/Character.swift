@@ -22,10 +22,18 @@ class Character {
     
     /// print characteristic of character
     /// - Parameter index: it's number position in the team
-    func introduceCharacter(index: Int) {
+    func introduceCharacter(index: Int, filterAgainAlive: Bool) {
         var characteristic = "- \(index + 1) - \(name)"
             + "\n❤️: \(lifePoint)"
             + "\n⚔️: \(weapon.name)(\(weapon.damage))"
+        
+        if filterAgainAlive {
+            guard lifePoint > 0 else {
+                print("- \(index + 1) - \(name) is died")
+                return
+            }
+        }
+       
         if healing > 0 {
             characteristic +=  "\n❤️‍🩹: \(healing)"
         }
