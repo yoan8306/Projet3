@@ -78,8 +78,7 @@ class Player {
 
 // Attack
 extension Player {
-    
-    
+
     /// Choose his character attack and choose character receive attack and impose damage
     /// - Parameters:
     ///   - playerDefense: hero receive attack
@@ -148,7 +147,7 @@ extension Player {
         
         showTeam(healing: false)
         
-        characterWounded = chooseCharacterWounded()
+        characterWounded = choiceCharacter()
         characterWounded.lifePoint += doctor.healing
         
         print("\(characterWounded.name) was treated: \n❤️ \(characterWounded.lifePoint)")
@@ -171,28 +170,5 @@ extension Player {
                 }
             }
         return doctor
-    }
-    
-    /// get choice player. this fonction check if character choice is alive
-    /// - Returns: if ok return character choice
-    private func chooseCharacterWounded() -> Character {
-        var characterWounded = team[0]
-        var choice = InputReadLine.getIntegerUserInput()
-            
-            if [1,2,3].contains(choice) {
-                choice -= 1
-
-                if team[choice].lifePoint > 0 {
-                    characterWounded = team[choice]
-                } else {
-                    print("Select another hero please")
-                    return chooseCharacterWounded()
-                }
-                
-            } else {
-                print("I donc't understand")
-                return chooseCharacterWounded()
-            }
-        return characterWounded
     }
 }
