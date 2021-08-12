@@ -112,7 +112,7 @@ extension Player {
     private func choiceCharacter() -> Character {
         var character = team[0]
         var choice = InputReadLine.getIntegerUserInput()
-
+        
             if [1, 2, 3].contains(choice) {
                 choice -= 1
 
@@ -130,6 +130,12 @@ extension Player {
             }
         return character
     }
+    
+    enum caseIntroduce {
+        case attacking, defending, doctor
+    }
+    
+    
 }
 
 // Healing
