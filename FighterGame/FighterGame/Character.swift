@@ -21,7 +21,7 @@ class Character {
     }
 
     /// print characteristic of character
-    /// - Parameter index: it's number position in the team
+    /// - Parameter index: index of character for selection
     func introduceCharacter(index: Int, filterAgainAlive: Bool) {
         var characteristic = "- \(index + 1) - \(name)"
             + "\n❤️: \(lifePoint)"
@@ -40,5 +40,14 @@ class Character {
         characteristic += "\n**********************"
 
         print(characteristic)
+    }
+
+    /// print doctors alive
+    /// - Parameter index: index of character for selection
+    func introduceDoctor(index: Int) {
+        if healing > 0 && lifePoint > 0 {
+            print("\(index + 1) - \(name)"
+                    + "\n❤️‍🩹\(healing)")
+        }
     }
 }

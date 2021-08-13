@@ -7,6 +7,8 @@
 
 import Foundation
 
+Main.launchGame()
+
 class Main {
     /// player select if want launch game or exit the program
     static func launchGame() {
@@ -20,15 +22,11 @@ class Main {
             print("Start new game")
             Game().startNewGame()
             launchGame()
-
         case 2:
             break
-
         default:
             print("I don't understand." + "n/Try again please.")
             launchGame()
         }
     }
 }
-
-Main.launchGame()

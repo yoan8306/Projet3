@@ -19,7 +19,7 @@ class Game {
         playerTwo = Player(name: "Player 2")
     }
 
-    /// launch game
+    /// evolution of the game
     func startNewGame() {
         gameCreateTeam(player: playerOne)
         gameCreateTeam(player: playerTwo)
@@ -28,6 +28,7 @@ class Game {
     }
 }
 
+// For start game
 extension Game {
 
     /// Create team for player
@@ -66,7 +67,6 @@ extension Game {
 
 // fight round by round
 extension Game {
-
     /// it's game of round by round until they are no character alive in a team
     private func roundByRound() {
         var attackingPlayer = playerOne
@@ -94,7 +94,6 @@ extension Game {
         switch InputReadLine.getIntegerUserInput() {
         case 1:
             let randomBonus = bonus.createRandomBonus()
-
             attackingPlayer.attack(playerDefense: defendingPlayer, weaponBonus: randomBonus)
         case 2:
             attackingPlayer.healing()
@@ -114,7 +113,10 @@ extension Game {
             return playerOne
         }
     }
+}
 
+// End game
+extension Game {
     /// present statistic at the end game
     private func presentStatistic() {
         print("\nYou have played \(numberRound) round")
@@ -126,6 +128,7 @@ extension Game {
         print("Game Over")
     }
 
+    /// indicate number bonus used and list them
     private func listBonusUsed() {
         guard !bonus.bonusUsed.isEmpty else {
             return
