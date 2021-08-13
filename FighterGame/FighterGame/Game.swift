@@ -90,13 +90,11 @@ extension Game {
         print("What do you want to do: "
                 + "\n- 1 - Attacking"
                 + "\n- 2 - Healing")
-
-        switch InputReadLine.getIntegerUserInput() {
-        case 1:
+      let action = InputReadLine.getIntegerUserInput()
+        switch action {
+        case 1, 2:
             let randomBonus = bonus.createRandomBonus()
-            attackingPlayer.attack(playerDefense: defendingPlayer, weaponBonus: randomBonus)
-        case 2:
-            attackingPlayer.healing()
+            attackingPlayer.makeAction(playerDefense: defendingPlayer, weaponBonus: randomBonus, actionChoose: action)
         default:
             print("I don't understand your response. \nTry again please")
             attackOrHealing(for: attackingPlayer, defendingPlayer: defendingPlayer)

@@ -42,38 +42,36 @@ extension Player {
     /// - Parameters:
     ///   - playerDefense: hero receive attack
     ///   - weaponBonus: if player choose bonus weaponBonus impose damage if not player choose his hero
-    func attack(playerDefense: Player, weaponBonus: Weapon?) {
-        var heroAttack: Character = team[0]
-        var heroDefense: Character
+    func makeAction(playerDefense: Player, weaponBonus: Weapon?, actionChoose: Int) {
+        var principalCharacter: Character = team[0]
+        var receptor: Character
 
-        if weaponBonus == nil {
-            heroAttack = choiceCharacter(for: .attacking)
+        switch actionChoose {
+        case 1:
+            if weaponBonus == nil {
+                principalCharacter = choiceCharacter(for: .attacking)
+            }
+
+            receptor = playerDefense.choiceCharacter(for: .defending)
+
+            if weaponBonus == nil {
+                receptor.lifePoint -=  principalCharacter.weapon.damage
+            } else if let bonusWeapon = weaponBonus {
+                receptor.lifePoint -= bonusWeapon.damage
+            }
+            if receptor.lifePoint < 0 {
+                receptor.lifePoint = 0
+            }
+
+            print("\(receptor.name): ❤️\(receptor.lifePoint) - ")
+        case 2:
+            principalCharacter = choiceCharacter(for: .doctor)
+            receptor = choiceCharacter(for: .healing)
+            receptor.lifePoint += principalCharacter.healing
+            print("\(receptor.name) was treated: \n❤️ \(receptor.lifePoint)")
+        default:
+            Game().attackOrHealing(for: self, defendingPlayer: playerDefense)
         }
-
-        heroDefense = playerDefense.choiceCharacter(for: .defending)
-
-        if weaponBonus == nil {
-            heroDefense.lifePoint -=  heroAttack.weapon.damage
-        } else if let bonusWeapon = weaponBonus {
-            heroDefense.lifePoint -= bonusWeapon.damage
-        }
-        if heroDefense.lifePoint < 0 {
-            heroDefense.lifePoint = 0
-        }
-
-        print("\(heroDefense.name): ❤️\(heroDefense.lifePoint) - ")
-    }
-
-    /// player select a doctor and select wounded
-    func healing() {
-        var doctor = team[0]
-        var characterWounded = team[0]
-
-        doctor = choiceCharacter(for: .doctor)
-        characterWounded = choiceCharacter(for: .healing)
-        characterWounded.lifePoint += doctor.healing
-
-        print("\(characterWounded.name) was treated: \n❤️ \(characterWounded.lifePoint)")
     }
 
     ///  selection hero and check selection is good
