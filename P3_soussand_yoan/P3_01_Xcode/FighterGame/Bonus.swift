@@ -23,7 +23,6 @@ class Bonus {
 
         print("You have bonus")
         print("Congratulation! \nTap 1- for use \(bonus.name)(\(bonus.damage)) \nTap 2- you select your hero")
-
         return askToUseBonus(weapon: bonus)
     }
 
