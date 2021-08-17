@@ -10,7 +10,6 @@ import Foundation
 class Game {
     var playerOne: Player
     var playerTwo: Player
-    var index = 1
     var numberRound = 0
     let bonus = Bonus()
 
