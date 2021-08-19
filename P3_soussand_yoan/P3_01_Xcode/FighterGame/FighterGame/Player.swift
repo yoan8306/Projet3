@@ -27,13 +27,6 @@ extension Player {
         }
         return false
     }
-
-    /// list all characters with statistics in a team
-    func listAllCharacters() {
-        for indexOfCharacter in (0...team.count - 1) {
-            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter, filterAgainAlive: false)
-        }
-    }
 }
 
 // In roundByRound
@@ -65,7 +58,7 @@ extension Player {
     private func choiceCharacter(for action: ActionType) -> Character {
         var character = team[0]
 
-        introduceAction(action: action)
+        introduceTeam(action: action)
 
         var choice = InputReadLine.getIntegerUserInput()
 
@@ -78,7 +71,7 @@ extension Player {
                 print("\(team[choice].name) is died. \nSelect another character please.")
                 return choiceCharacter(for: action)
             }
-
+            
         } else {
             print("I don't understand your response"
                     + "\nTry again please")
@@ -89,7 +82,7 @@ extension Player {
 
     /// print and show team  in pending action
     /// - Parameter action: is pending action
-    private func introduceAction(action: ActionType) {
+    private func introduceAction(action: ActionType) -> String {
         var introduce = ""
 
         switch action {
@@ -102,22 +95,31 @@ extension Player {
         case .doctor:
             introduce = "Select your doctor"
         }
-
-        print("\(introduce)")
-        introduceTeam(action: action)
+        return introduce
     }
 
     /// list character still alive and can healing
     /// - Parameter healing: select if show just still alive or can healing
     private func introduceTeam(action: ActionType) {
+        print("\(introduceAction(action: action))")
+
         if action == .doctor {
+            
             for indexOfCharacter in (0...team.count - 1) {
                 team[indexOfCharacter].introduceDoctor(index: indexOfCharacter)
             }
+            
         } else {
-            for indexOfCharacter in (0...team.count - 1) {
-                team[indexOfCharacter].introduceCharacter(index: indexOfCharacter, filterAgainAlive: true)
+            for indexOfCharacter in (0...team.count - 1) where team[indexOfCharacter].lifePoint > 0 {
+                team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
             }
+        }
+    }
+
+    /// list all characters with statistics in a team
+    func listAllCharacters() {
+        for indexOfCharacter in (0...team.count - 1) {
+            team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
         }
     }
 

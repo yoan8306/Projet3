@@ -82,7 +82,6 @@
 		5FF6D7442678F00300431878 /* FighterGame */ = {
 			isa = PBXGroup;
 			children = (
-				5FD7240026CE671C00A14EBE /* Enum */,
 				5FF6D7452678F00300431878 /* main.swift */,
 				5F50437F268211E500DDC52E /* Game.swift */,
 				5F1E29322685A9C4007AE8B7 /* Player.swift */,
@@ -90,6 +89,7 @@
 				5FC4104226793E29003C88A9 /* Weapons.swift */,
 				5F81C43A26B16F13002508B6 /* Bonus.swift */,
 				5F79830826BBF44B00567DCF /* InputReadLine.swift */,
+				5FD7240026CE671C00A14EBE /* Enum */,
 			);
 			path = FighterGame;
 			sourceTree = "<group>";

@@ -22,28 +22,17 @@ class Character {
 
     /// print characteristic of character
     /// - Parameter index: index of character for selection
-    func introduceCharacter(index: Int, filterAgainAlive: Bool) {
+    func introduceCharacter(index: Int) {
         var characteristic = "- \(index + 1) - \(name)"
-            + "\n❤️: \(lifePoint)"
-            + "\n⚔️: \(weapon.name)(\(weapon.damage))"
-
-//        guard filterAgainAlive && lifePoint > 0 else {
-//            print("- \(index + 1) - \(name) is died")
-//            return
-//        }
+                            + "\n❤️: \(lifePoint)"
+                            + "\n⚔️: \(weapon.name)(\(weapon.damage))"
         
-        if filterAgainAlive {
-            guard lifePoint > 0 else {
-                print("- \(index + 1) - \(name) is died")
-                return
-            }
-        }
-
         if healing > 0 {
             characteristic +=  "\n❤️‍🩹: \(healing)"
         }
+        
         characteristic += "\n**********************"
-
+        
         print(characteristic)
     }
 
@@ -53,6 +42,7 @@ class Character {
         guard healing > 0 && lifePoint > 0 else {
             return
         }
+        
         print("\(index + 1) - \(name)"
                 + "\n❤️‍🩹\(healing)")
     }
