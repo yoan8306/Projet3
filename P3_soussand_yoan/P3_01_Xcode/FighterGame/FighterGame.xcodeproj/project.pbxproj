@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5F1E29332685A9C4007AE8B7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1E29322685A9C4007AE8B7 /* Player.swift */; };
 		5F504380268211E500DDC52E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F50437F268211E500DDC52E /* Game.swift */; };
+		5F703F1F26CD2B3E002BD38C /* ActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F703F1E26CD2B3E002BD38C /* ActionEnum.swift */; };
+		5F703F2126CD2B49002BD38C /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F703F2026CD2B49002BD38C /* ActionType.swift */; };
 		5F79830926BBF44B00567DCF /* InputReadLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F79830826BBF44B00567DCF /* InputReadLine.swift */; };
 		5F81C43B26B16F13002508B6 /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F81C43A26B16F13002508B6 /* Bonus.swift */; };
 		5FC4104126793DDE003C88A9 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4104026793DDE003C88A9 /* Character.swift */; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		5F1E29322685A9C4007AE8B7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5F50437F268211E500DDC52E /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		5F703F1E26CD2B3E002BD38C /* ActionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEnum.swift; sourceTree = "<group>"; };
+		5F703F2026CD2B49002BD38C /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		5F79830826BBF44B00567DCF /* InputReadLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputReadLine.swift; sourceTree = "<group>"; };
 		5F81C43A26B16F13002508B6 /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
 		5FC4104026793DDE003C88A9 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
@@ -50,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5FD7240026CE671C00A14EBE /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				5F703F1E26CD2B3E002BD38C /* ActionEnum.swift */,
+				5F703F2026CD2B49002BD38C /* ActionType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		5FF6D7392678F00200431878 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +82,7 @@
 		5FF6D7442678F00300431878 /* FighterGame */ = {
 			isa = PBXGroup;
 			children = (
+				5FD7240026CE671C00A14EBE /* Enum */,
 				5FF6D7452678F00300431878 /* main.swift */,
 				5F50437F268211E500DDC52E /* Game.swift */,
 				5F1E29322685A9C4007AE8B7 /* Player.swift */,
@@ -164,6 +178,8 @@
 				5F1E29332685A9C4007AE8B7 /* Player.swift in Sources */,
 				5F504380268211E500DDC52E /* Game.swift in Sources */,
 				5F79830926BBF44B00567DCF /* InputReadLine.swift in Sources */,
+				5F703F1F26CD2B3E002BD38C /* ActionEnum.swift in Sources */,
+				5F703F2126CD2B49002BD38C /* ActionType.swift in Sources */,
 				5F81C43B26B16F13002508B6 /* Bonus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

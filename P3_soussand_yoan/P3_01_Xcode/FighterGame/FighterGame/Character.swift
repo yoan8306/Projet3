@@ -27,6 +27,11 @@ class Character {
             + "\n❤️: \(lifePoint)"
             + "\n⚔️: \(weapon.name)(\(weapon.damage))"
 
+//        guard filterAgainAlive && lifePoint > 0 else {
+//            print("- \(index + 1) - \(name) is died")
+//            return
+//        }
+        
         if filterAgainAlive {
             guard lifePoint > 0 else {
                 print("- \(index + 1) - \(name) is died")
@@ -45,9 +50,27 @@ class Character {
     /// print doctors alive
     /// - Parameter index: index of character for selection
     func introduceDoctor(index: Int) {
-        if healing > 0 && lifePoint > 0 {
-            print("\(index + 1) - \(name)"
-                    + "\n❤️‍🩹\(healing)")
+        guard healing > 0 && lifePoint > 0 else {
+            return
         }
+        print("\(index + 1) - \(name)"
+                + "\n❤️‍🩹\(healing)")
+    }
+
+    func doAttack(target: Character, weaponBonus: Weapon?) {
+        if let bonusWeapon = weaponBonus {
+            target.lifePoint -= bonusWeapon.damage
+        } else {
+            target.lifePoint -= weapon.damage
+        }
+        if target.lifePoint < 0 {
+            target.lifePoint = 0
+        }
+        print("\(target.name): ❤️\(target.lifePoint) - ")
+    }
+
+    func doHealing(target: Character) {
+        target.lifePoint += healing
+        print("\(target.name) was treated: \n❤️ \(target.lifePoint)")
     }
 }

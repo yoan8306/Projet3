@@ -42,41 +42,27 @@ extension Player {
     /// - Parameters:
     ///   - playerDefense: hero receive attack
     ///   - weaponBonus: if player choose bonus weaponBonus impose damage if not player choose his hero
-    func makeAction(playerDefense: Player, weaponBonus: Weapon?, actionChoose: Int) {
-        var principalCharacter: Character = team[0]
-        var receptor: Character
+    func makeAction(playerDefense: Player, weaponBonus: Weapon?, actionChoose: ActionEnum) {
+        var playingCharacter: Character = team[0]
+        var target: Character
 
         switch actionChoose {
-        case 1:
+        case .attack:
             if weaponBonus == nil {
-                principalCharacter = choiceCharacter(for: .attacking)
+                playingCharacter = choiceCharacter(for: .attacking)
             }
-
-            receptor = playerDefense.choiceCharacter(for: .defending)
-
-            if weaponBonus == nil {
-                receptor.lifePoint -=  principalCharacter.weapon.damage
-            } else if let bonusWeapon = weaponBonus {
-                receptor.lifePoint -= bonusWeapon.damage
-            }
-            if receptor.lifePoint < 0 {
-                receptor.lifePoint = 0
-            }
-
-            print("\(receptor.name): ❤️\(receptor.lifePoint) - ")
-        case 2:
-            principalCharacter = choiceCharacter(for: .doctor)
-            receptor = choiceCharacter(for: .healing)
-            receptor.lifePoint += principalCharacter.healing
-            print("\(receptor.name) was treated: \n❤️ \(receptor.lifePoint)")
-        default:
-            Game().attackOrHealing(for: self, defendingPlayer: playerDefense)
+            target = playerDefense.choiceCharacter(for: .defending)
+            playingCharacter.doAttack(target: target, weaponBonus: weaponBonus)
+        case .heal:
+            playingCharacter = choiceCharacter(for: .doctor)
+            target = choiceCharacter(for: .healing)
+            playingCharacter.doHealing(target: target)
         }
     }
 
     ///  selection hero and check selection is good
     /// - Returns: hero choice by player
-    private func choiceCharacter(for action: CaseIntroduce) -> Character {
+    private func choiceCharacter(for action: ActionType) -> Character {
         var character = team[0]
 
         introduceAction(action: action)
@@ -101,14 +87,9 @@ extension Player {
         return character
     }
 
-    /// different action of play
-    private enum CaseIntroduce {
-        case attacking, defending, doctor, healing
-    }
-
     /// print and show team  in pending action
     /// - Parameter action: is pending action
-    private func introduceAction(action: CaseIntroduce) {
+    private func introduceAction(action: ActionType) {
         var introduce = ""
 
         switch action {
@@ -123,12 +104,12 @@ extension Player {
         }
 
         print("\(introduce)")
-        showTeam(action: action)
+        introduceTeam(action: action)
     }
 
     /// list character still alive and can healing
     /// - Parameter healing: select if show just still alive or can healing
-    private func showTeam(action: CaseIntroduce) {
+    private func introduceTeam(action: ActionType) {
         if action == .doctor {
             for indexOfCharacter in (0...team.count - 1) {
                 team[indexOfCharacter].introduceDoctor(index: indexOfCharacter)
