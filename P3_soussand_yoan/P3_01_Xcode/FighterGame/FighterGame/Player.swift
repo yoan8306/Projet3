@@ -71,7 +71,6 @@ extension Player {
                 print("\(team[choice].name) is died. \nSelect another character please.")
                 return choiceCharacter(for: action)
             }
-            
         } else {
             print("I don't understand your response"
                     + "\nTry again please")
@@ -80,7 +79,7 @@ extension Player {
         return character
     }
 
-    /// print and show team  in pending action
+    /// stock phrase in pending action
     /// - Parameter action: is pending action
     private func introduceAction(action: ActionType) -> String {
         var introduce = ""
@@ -98,17 +97,15 @@ extension Player {
         return introduce
     }
 
-    /// list character still alive and can healing
-    /// - Parameter healing: select if show just still alive or can healing
+    /// list character still alive and can healing or list only character still alive
+    /// - Parameter action: inform what action is pending
     private func introduceTeam(action: ActionType) {
         print("\(introduceAction(action: action))")
 
         if action == .doctor {
-            
             for indexOfCharacter in (0...team.count - 1) {
                 team[indexOfCharacter].introduceDoctor(index: indexOfCharacter)
             }
-            
         } else {
             for indexOfCharacter in (0...team.count - 1) where team[indexOfCharacter].lifePoint > 0 {
                 team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
@@ -124,7 +121,8 @@ extension Player {
     }
 
     /// check if one of characters again alive
-    /// - Returns: if one character is alive return true else return false. all character in team are died
+    /// - Returns: if one character is alive return true and game continue.
+    ///           if all character in team are died return false and game is finish
     func characterStillAlive() -> Bool {
         for character in team where character.lifePoint > 0 {
             return true

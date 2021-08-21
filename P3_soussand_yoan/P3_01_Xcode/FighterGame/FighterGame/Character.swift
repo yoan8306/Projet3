@@ -21,32 +21,36 @@ class Character {
     }
 
     /// print characteristic of character
-    /// - Parameter index: index of character for selection
+    /// - Parameter index: index of character selected
     func introduceCharacter(index: Int) {
         var characteristic = "- \(index + 1) - \(name)"
                             + "\n❤️: \(lifePoint)"
                             + "\n⚔️: \(weapon.name)(\(weapon.damage))"
-        
+
         if healing > 0 {
             characteristic +=  "\n❤️‍🩹: \(healing)"
         }
-        
+
         characteristic += "\n**********************"
-        
+
         print(characteristic)
     }
 
     /// print doctors alive
-    /// - Parameter index: index of character for selection
+    /// - Parameter index: index of character selected
     func introduceDoctor(index: Int) {
         guard healing > 0 && lifePoint > 0 else {
             return
         }
-        
+
         print("\(index + 1) - \(name)"
                 + "\n❤️‍🩹\(healing)")
     }
 
+    /// manage damage on character target
+    /// - Parameters:
+    ///   - target: impose damage on character damage
+    ///   - weaponBonus: we stock bonus here if they are bonus on the round and if the player want use bonus
     func doAttack(target: Character, weaponBonus: Weapon?) {
         if let bonusWeapon = weaponBonus {
             target.lifePoint -= bonusWeapon.damage
@@ -59,6 +63,8 @@ class Character {
         print("\(target.name): ❤️\(target.lifePoint) - ")
     }
 
+    /// make healing
+    /// - Parameter target: character receive the heal
     func doHealing(target: Character) {
         target.lifePoint += healing
         print("\(target.name) was treated: \n❤️ \(target.lifePoint)")

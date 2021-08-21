@@ -54,7 +54,7 @@ extension Game {
     /// check if name doesn't exist
     /// - Parameter newName: it's new name for comparaison
     /// - Returns: if false newName doesn't exist in all teams / return  true if newName already exist.
-    func characterNameAlreadyExist(newName: String) -> Bool {
+   private func characterNameAlreadyExist(newName: String) -> Bool {
         if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) {
             print("This name already exist in a team. \nTry again please.")
             return true
@@ -84,7 +84,7 @@ extension Game {
     /// - Parameters:
     ///   - attackingPlayer: player playing
     ///   - defendingPlayer: player in case receive attack
-    func attackOrHealing(for attackingPlayer: Player, defendingPlayer: Player) {
+   private func attackOrHealing(for attackingPlayer: Player, defendingPlayer: Player) {
         print("\(attackingPlayer.name) it's your turn !")
         print("What do you want to do: "
                 + "\n- 1 - Attacking"

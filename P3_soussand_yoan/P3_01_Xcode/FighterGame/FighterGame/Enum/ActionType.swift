@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// different action of play
+/// different role  of character can be
 enum ActionType {
      case attacking, defending, doctor, healing
  }

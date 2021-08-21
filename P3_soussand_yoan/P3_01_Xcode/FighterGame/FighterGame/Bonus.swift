@@ -10,8 +10,8 @@ import Foundation
 class Bonus {
     var bonusUsed: [Weapon] = []
 
-    ///  if var randomValue == 0 then we can purpose a random weapon in . and ask if player want use new weapon.
-    /// - Returns: return a random weapon
+    ///  if var randomValue isn't 0 then we can purpose a random weapon and ask if player want use new weapon.
+    /// - Returns: return a weapon if
      func createRandomBonus() -> Weapon? {
         let randomValue = Int.random(in: 0...5)
         let max = Weapon.allWeapons.count - 1
@@ -29,7 +29,7 @@ class Bonus {
     /// Ask if player want use bonus or not.
     /// - Parameter weapon: it's weapon bonus create above this.
     /// - Returns: return weapon create above or nil if player don't want use bonus
-     func askToUseBonus(weapon: Weapon) -> Weapon? {
+    private func askToUseBonus(weapon: Weapon) -> Weapon? {
         let choice = InputReadLine.getIntegerUserInput()
 
             switch choice {
