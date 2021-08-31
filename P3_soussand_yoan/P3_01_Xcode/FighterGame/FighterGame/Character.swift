@@ -31,7 +31,7 @@ class Character {
             characteristic +=  "\n❤️‍🩹: \(healing)"
         }
 
-        characteristic += "\n**********************"
+        characteristic += "\n**********************\n"
 
         print(characteristic)
     }
@@ -60,13 +60,13 @@ class Character {
         if target.lifePoint < 0 {
             target.lifePoint = 0
         }
-        print("\(target.name): ❤️\(target.lifePoint) - ")
+        print("\(target.name): ❤️\(target.lifePoint)\n")
     }
 
     /// make healing
     /// - Parameter target: character receive the heal
     func doHealing(target: Character) {
         target.lifePoint += healing
-        print("\(target.name) was treated: \n❤️ \(target.lifePoint)")
+        print("\(target.name) was treated: \n❤️ \(target.lifePoint)\n")
     }
 }

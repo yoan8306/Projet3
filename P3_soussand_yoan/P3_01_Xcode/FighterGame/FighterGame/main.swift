@@ -19,13 +19,13 @@ class Main {
 
         switch choice {
         case 1:
-            print("Start new game")
+            print("\nStart new game")
             Game().startNewGame()
             launchGame()
         case 2:
             break
         default:
-            print("I don't understand." + "n/Try again please.")
+            print("I don't understand." + "n/Try again please.\n")
             launchGame()
         }
     }

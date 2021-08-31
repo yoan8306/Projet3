@@ -68,33 +68,15 @@ extension Player {
             if team[choice].lifePoint > 0 {
                 character = team[choice]
             } else {
-                print("\(team[choice].name) is died. \nSelect another character please.")
+                print("\(team[choice].name) is died. \nSelect another character please.\n")
                 return choiceCharacter(for: action)
             }
         } else {
             print("I don't understand your response"
-                    + "\nTry again please")
+                    + "\nTry again please\n")
             return choiceCharacter(for: action)
         }
         return character
-    }
-
-    /// stock phrase in pending action
-    /// - Parameter action: is pending action
-    private func introduceAction(action: ActionType) -> String {
-        var introduce = ""
-
-        switch action {
-        case .attacking:
-            introduce = "Select your character for attack."
-        case .defending:
-            introduce = "Select character receiving attack."
-        case .healing:
-            introduce = "Select your hero to be treating"
-        case .doctor:
-            introduce = "Select your doctor"
-        }
-        return introduce
     }
 
     /// list character still alive and can healing or list only character still alive
@@ -110,6 +92,21 @@ extension Player {
             for indexOfCharacter in (0...team.count - 1) where team[indexOfCharacter].lifePoint > 0 {
                 team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
             }
+        }
+    }
+
+    /// stock phrase in pending action
+    /// - Parameter action: is pending action
+    private func introduceAction(action: ActionType) -> String {
+        switch action {
+        case .attacking:
+            return "\nSelect your character for attack.\n"
+        case .defending:
+            return "\nSelect character receiving attack.\n"
+        case .healing:
+            return "\nSelect your hero to be treating\n"
+        case .doctor:
+            return "\nSelect your doctor\n"
         }
     }
 

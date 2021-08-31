@@ -8,10 +8,10 @@
 import Foundation
 
 class Game {
-    var playerOne: Player
-    var playerTwo: Player
-    var numberRound = 0
-    let bonus = Bonus()
+    private var playerOne: Player
+    private var playerTwo: Player
+    private var numberRound = 0
+    private let bonus = Bonus()
 
     init() {
         playerOne = Player(name: "Player 1")
@@ -43,11 +43,11 @@ extension Game {
             }
 
             player.team.append(Character(newName: newName))
-            print("\(newName) has added in your team ")
+            print("\n\(newName) has added in your team\n")
         }
 
-        print("Successful! \n your team is created")
-        print("-------\(player.name) your team is: -----------")
+        print("Successful ! \nYour team is created\n")
+        print("-------\(player.name) your team is: -----------\n")
         player.listAllCharacters()
     }
 

@@ -21,8 +21,8 @@ class Bonus {
             return nil
         }
 
-        print("You have bonus")
-        print("Congratulation! \nTap 1- for use \(bonus.name)(\(bonus.damage)) \nTap 2- you select your hero")
+        print("\nCongratulation, you have bonus!")
+        print("\nTap 1- for use \(bonus.name)(\(bonus.damage)) \nTap 2- you select your hero")
         return askToUseBonus(weapon: bonus)
     }
 
@@ -34,11 +34,11 @@ class Bonus {
 
             switch choice {
             case 1:
-                print("you choose a present")
+                print("you choose a present\n")
                 bonusUsed.append(weapon)
                 return weapon
             case 2:
-                print("You choose your hero")
+                print("You choose your hero\n")
                 return nil
             default:
            print("I don't understand" + "n/Try again please")

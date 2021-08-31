@@ -14,7 +14,7 @@ class InputReadLine {
         if let choice = readLine(), choice.isEmpty == false, let intChoice = Int(choice) {
             return intChoice
         } else {
-            print("I don't understand" + "\nTry again please")
+            print("I don't understand" + "\nTry again please\n")
             return getIntegerUserInput()
         }
     }
@@ -22,10 +22,10 @@ class InputReadLine {
     /// manage input of player and check if they are an input
     /// - Returns: returns string if player press one touch
     static func getStringUserInput() -> String {
-        if let response = readLine(), response.isEmpty == false, response != ""{
+        if let response = readLine()?.trimmingCharacters(in: .whitespaces), response.isEmpty == false {
             return response
         } else {
-            print("I don't understand" + "\nTry again please")
+            print("I don't understand" + "\nTry again please\n")
             return getStringUserInput()
         }
     }
