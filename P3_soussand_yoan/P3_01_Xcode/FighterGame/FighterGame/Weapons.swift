@@ -10,12 +10,12 @@ import Foundation
 class Weapon {
     var damage: Int
     var name: String
-
+    
     init(damage: Int, name: String) {
         self.damage = damage
         self.name = name
     }
-
+    
     static var allWeapons: [Weapon] {
         [Knife(),
          Gun(),

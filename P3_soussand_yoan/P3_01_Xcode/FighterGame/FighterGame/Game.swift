@@ -12,12 +12,12 @@ class Game {
     private var playerTwo: Player
     private var numberRound = 0
     private let bonus = Bonus()
-
+    
     init() {
         playerOne = Player(name: "Player 1")
         playerTwo = Player(name: "Player 2")
     }
-
+    
     /// evolution of the game
     func startNewGame() {
         gameCreateTeam(player: playerOne)
@@ -29,7 +29,7 @@ class Game {
 
 // For start game
 extension Game {
-
+    
     /// Create team for player
     /// - Parameter player: it's player who should create team
     private func gameCreateTeam(player: Player) {
@@ -37,24 +37,24 @@ extension Game {
         for index in 1...3 {
             print("Enter the name of character \(index)")
             var newName = InputReadLine.getStringUserInput()
-
+            
             while characterNameAlreadyExist(newName: newName) {
                 newName = InputReadLine.getStringUserInput()
             }
-
+            
             player.team.append(Character(newName: newName))
             print("\n\(newName) has added in your team\n")
         }
-
+        
         print("Successful ! \nYour team is created\n")
         print("-------\(player.name) your team is: -----------\n")
         player.listAllCharacters()
     }
-
+    
     /// check if name doesn't exist
     /// - Parameter newName: it's new name for comparaison
     /// - Returns: if false newName doesn't exist in all teams / return  true if newName already exist.
-   private func characterNameAlreadyExist(newName: String) -> Bool {
+    private func characterNameAlreadyExist(newName: String) -> Bool {
         if  playerOne.checkNameAlreadyExist(newName: newName) || playerTwo.checkNameAlreadyExist(newName: newName) {
             print("This name already exist in a team. \nTry again please.")
             return true
@@ -70,7 +70,7 @@ extension Game {
     private func roundByRound() {
         var attackingPlayer = playerOne
         var defendingPlayer = playerTwo
-
+        
         while attackingPlayer.characterStillAlive() {
             numberRound += 1
             attackOrHealing(for: attackingPlayer, defendingPlayer: defendingPlayer)
@@ -79,29 +79,29 @@ extension Game {
         }
         print("\(defendingPlayer.name) win")
     }
-
+    
     /// manage attack or heal. ask player what he want to do.
     /// - Parameters:
     ///   - attackingPlayer: player playing
     ///   - defendingPlayer: player in case receive attack
-   private func attackOrHealing(for attackingPlayer: Player, defendingPlayer: Player) {
+    private func attackOrHealing(for attackingPlayer: Player, defendingPlayer: Player) {
         print("\(attackingPlayer.name) it's your turn !")
         print("What do you want to do: "
                 + "\n- 1 - Attacking"
                 + "\n- 2 - Healing")
-      let choice = InputReadLine.getIntegerUserInput()
+        let choice = InputReadLine.getIntegerUserInput()
         switch choice {
         case 1, 2:
             let randomBonus = bonus.createRandomBonus()
             let action: ActionEnum = choice == 1 ? .attack : .heal
             attackingPlayer.makeAction(playerDefense: defendingPlayer, weaponBonus: randomBonus, actionChoose: action)
-
+            
         default:
             print("I don't understand your response. \nTry again please")
             attackOrHealing(for: attackingPlayer, defendingPlayer: defendingPlayer)
         }
     }
-
+    
     /// change turn player
     /// - Parameter player: player went playing
     /// - Returns: player will play
@@ -126,13 +126,13 @@ extension Game {
         playerTwo.listAllCharacters()
         print("Game Over")
     }
-
+    
     /// indicate number bonus used and list them
     private func listBonusUsed() {
         guard !bonus.bonusUsed.isEmpty else {
             return
         }
-
+        
         print("\nYou have used \(bonus.bonusUsed.count) bonus: it's")
         for bonus in bonus.bonusUsed {
             print("\(bonus.name)(\(bonus.damage))")

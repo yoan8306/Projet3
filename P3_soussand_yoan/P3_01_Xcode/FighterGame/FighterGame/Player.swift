@@ -10,7 +10,7 @@ import Foundation
 class Player {
     var name: String
     var team: [Character] = []
-
+    
     init(name: String) {
         self.name = name
     }
@@ -38,7 +38,7 @@ extension Player {
     func makeAction(playerDefense: Player, weaponBonus: Weapon?, actionChoose: ActionEnum) {
         var playingCharacter: Character = team[0]
         var target: Character
-
+        
         switch actionChoose {
         case .attack:
             if weaponBonus == nil {
@@ -52,19 +52,19 @@ extension Player {
             playingCharacter.doHealing(target: target)
         }
     }
-
+    
     ///  selection hero and check selection is good
     /// - Returns: hero choice by player
     private func choiceCharacter(for action: ActionType) -> Character {
         var character = team[0]
-
+        
         introduceTeam(action: action)
-
+        
         var choice = InputReadLine.getIntegerUserInput()
-
+        
         if [1, 2, 3].contains(choice) {
             choice -= 1
-
+            
             if team[choice].lifePoint > 0 {
                 character = team[choice]
             } else {
@@ -78,12 +78,12 @@ extension Player {
         }
         return character
     }
-
+    
     /// list character still alive and can healing or list only character still alive
     /// - Parameter action: inform what action is pending
     private func introduceTeam(action: ActionType) {
         print("\(introduceAction(action: action))")
-
+        
         if action == .doctor {
             for indexOfCharacter in (0...team.count - 1) {
                 team[indexOfCharacter].introduceDoctor(index: indexOfCharacter)
@@ -94,7 +94,7 @@ extension Player {
             }
         }
     }
-
+    
     /// stock phrase in pending action
     /// - Parameter action: is pending action
     private func introduceAction(action: ActionType) -> String {
@@ -109,14 +109,14 @@ extension Player {
             return "\nSelect your doctor\n"
         }
     }
-
+    
     /// list all characters with statistics in a team
     func listAllCharacters() {
         for indexOfCharacter in (0...team.count - 1) {
             team[indexOfCharacter].introduceCharacter(index: indexOfCharacter)
         }
     }
-
+    
     /// check if one of characters again alive
     /// - Returns: if one character is alive return true and game continue.
     ///           if all character in team are died return false and game is finish

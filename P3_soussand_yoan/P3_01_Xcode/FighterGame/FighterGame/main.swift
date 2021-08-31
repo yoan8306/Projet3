@@ -14,10 +14,9 @@ class Main {
     static func launchGame() {
         print("Tap 1 for start new game of FighterGame"
                 + "\nTap 2 for exit")
-
-        let choice = InputReadLine.getIntegerUserInput()
-
-        switch choice {
+        
+        
+        switch InputReadLine.getIntegerUserInput() {
         case 1:
             print("\nStart new game")
             Game().startNewGame()
