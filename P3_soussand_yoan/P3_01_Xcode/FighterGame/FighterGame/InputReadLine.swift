@@ -18,7 +18,7 @@ class InputReadLine {
             return getIntegerUserInput()
         }
     }
-    
+
     /// manage input of player and check if they are an input
     /// - Returns: returns string if player press one touch
     static func getStringUserInput() -> String {
